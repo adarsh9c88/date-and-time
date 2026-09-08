@@ -47,7 +47,13 @@
     'images/track12.jpg',
     'images/track13.jpg',
     'images/track14.png',
-    'images/track15.jpg'
+    'images/track15.png',
+    'images/track16.png',
+    'images/track17.png',
+    'images/track18.png',
+    'images/track19.png',
+    'images/track20.png',
+    'images/track21.jpg'
   ];
 
   const assignedImages = [];
