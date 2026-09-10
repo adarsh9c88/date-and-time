@@ -1492,7 +1492,17 @@
       <button class="puzzle-shuffle-btn" id="puzzleShuffleBtn">🔀 Shuffle Again</button>
     </div>
   </section>
-
+    <div id="puzzleWinOverlay" role="dialog" aria-modal="true" aria-label="Puzzle solved">
+    <div class="puzzle-win-rain" id="puzzleWinRain"></div>
+    <div class="puzzle-win-heart-frame">
+      <svg viewBox="0 0 100 92" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="puzzle-win-heart-path" d="M50 90C50 90 6 60 6 30C6 14 17 5 30 5C39 5 46 10.5 50 18C54 10.5 61 5 70 5C83 5 94 14 94 30C94 60 50 90 50 90Z"></path>
+      </svg>
+    </div>
+    <div class="puzzle-win-image-wrap" id="puzzleWinImageWrap"></div>
+    <p class="puzzle-win-caption">🎉 You did it, Munni! 💕</p>
+    <button class="puzzle-win-close" id="puzzleWinClose" type="button" aria-label="Close">✕</button>
+  </div>
   <section id="cake">
     <h2 class="section-title reveal">Make a Wish! 🎂</h2>
     <p class="section-sub reveal">Blow out the candles and make a wish! 🕯️</p>
