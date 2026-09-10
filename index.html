@@ -1414,74 +1414,7 @@
       </div>
     </div>
   </section>
-    <style>
-    /* ===== PUZZLE SOLVED — FULLSCREEN REVEAL ===== */
-    #puzzleWinOverlay{
-      position:fixed;inset:0;z-index:11000;
-      background:radial-gradient(circle at 50% 40%,rgba(60,30,20,.88),rgba(20,10,8,.94));
-      backdrop-filter:blur(6px);
-      display:flex;align-items:center;justify-content:center;
-      padding:2cm;box-sizing:border-box;
-      opacity:0;pointer-events:none;overflow:hidden;
-      transition:opacity .5s ease;
-    }
-    #puzzleWinOverlay.show{opacity:1;pointer-events:all}
 
-    .puzzle-win-rain{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:1}
-    .puzzle-win-rain span{
-      position:absolute;top:-8%;font-size:1.4rem;opacity:0;
-      filter:drop-shadow(0 0 6px rgba(255,183,197,.85)) drop-shadow(0 0 14px rgba(255,217,138,.5));
-      animation-name:puzzleHeartFall;animation-timing-function:linear;animation-iteration-count:infinite;
-    }
-    @keyframes puzzleHeartFall{
-      0%{transform:translateY(0) rotate(0deg);opacity:0}
-      8%{opacity:1}
-      92%{opacity:1}
-      100%{transform:translateY(112vh) rotate(360deg);opacity:0}
-    }
-
-    .puzzle-win-heart-frame{position:absolute;inset:2cm;pointer-events:none;z-index:2}
-    .puzzle-win-heart-frame svg{width:100%;height:100%;overflow:visible}
-    .puzzle-win-heart-path{
-      fill:none;stroke:#FFD98A;stroke-width:2.2;vector-effect:non-scaling-stroke;
-      filter:drop-shadow(0 0 10px rgba(255,217,138,.85)) drop-shadow(0 0 26px rgba(255,143,171,.6));
-      animation:puzzleHeartGlow 2.2s ease-in-out infinite;
-    }
-    @keyframes puzzleHeartGlow{
-      0%,100%{stroke-width:1.8;opacity:.8}
-      50%{stroke-width:3;opacity:1}
-    }
-
-    .puzzle-win-image-wrap{
-      position:relative;max-width:100%;max-height:100%;z-index:3;
-      border-radius:22px;overflow:hidden;
-      box-shadow:0 30px 90px rgba(0,0,0,.55),0 0 70px rgba(255,183,197,.4),0 0 0 3px rgba(255,255,255,.25);
-      opacity:0;transform:scale(.7);
-      transition:opacity .6s ease,transform .6s cubic-bezier(.34,1.56,.64,1);
-    }
-    #puzzleWinOverlay.show .puzzle-win-image-wrap{opacity:1;transform:scale(1)}
-    .puzzle-win-image-wrap img{display:block;max-width:100%;max-height:100%;object-fit:contain}
-
-    .puzzle-win-caption{
-      position:absolute;bottom:.4cm;left:50%;transform:translateX(-50%);
-      z-index:5;font-family:'Pacifico',cursive;color:#FFF6EA;font-size:clamp(1.1rem,3vw,1.6rem);
-      text-shadow:0 2px 14px rgba(0,0,0,.65);text-align:center;
-      opacity:0;transition:opacity .6s ease .3s;white-space:nowrap;
-    }
-    #puzzleWinOverlay.show .puzzle-win-caption{opacity:1}
-
-    .puzzle-win-close{
-      position:absolute;top:.5cm;right:.5cm;z-index:6;
-      width:42px;height:42px;border-radius:50%;
-      background:rgba(255,255,255,.14);border:2px solid rgba(255,255,255,.4);
-      color:#fff;font-size:1.25rem;cursor:pointer;
-      display:flex;align-items:center;justify-content:center;
-      backdrop-filter:blur(4px);transition:transform .2s ease,background .2s ease;
-    }
-    .puzzle-win-close:hover{transform:scale(1.08);background:rgba(255,255,255,.24)}
-
-    body.dark-theme #puzzleWinOverlay{background:radial-gradient(circle at 50% 40%,rgba(20,12,8,.92),rgba(8,5,3,.96))}
-  </style>
   <section id="puzzle">
     <h2 class="section-title reveal">Piece It Together 🧩</h2>
     <p class="section-sub reveal">Tap two tiles to swap them and reveal the photo</p>
@@ -1492,17 +1425,7 @@
       <button class="puzzle-shuffle-btn" id="puzzleShuffleBtn">🔀 Shuffle Again</button>
     </div>
   </section>
-    <div id="puzzleWinOverlay" role="dialog" aria-modal="true" aria-label="Puzzle solved">
-    <div class="puzzle-win-rain" id="puzzleWinRain"></div>
-    <div class="puzzle-win-heart-frame">
-      <svg viewBox="0 0 100 92" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path class="puzzle-win-heart-path" d="M50 90C50 90 6 60 6 30C6 14 17 5 30 5C39 5 46 10.5 50 18C54 10.5 61 5 70 5C83 5 94 14 94 30C94 60 50 90 50 90Z"></path>
-      </svg>
-    </div>
-    <div class="puzzle-win-image-wrap" id="puzzleWinImageWrap"></div>
-    <p class="puzzle-win-caption">🎉 You did it, Munni! 💕</p>
-    <button class="puzzle-win-close" id="puzzleWinClose" type="button" aria-label="Close">✕</button>
-  </div>
+
   <section id="cake">
     <h2 class="section-title reveal">Make a Wish! 🎂</h2>
     <p class="section-sub reveal">Blow out the candles and make a wish! 🕯️</p>
@@ -3158,7 +3081,6 @@
           status.textContent = '🎉 You did it! Happy Birthday, Munni! 🎂';
           grid.querySelectorAll('.puzzle-tile').forEach(t => t.classList.add('solved-flash'));
           if (typeof celebrateSmall === 'function') celebrateSmall();
-          setTimeout(() => { if (typeof showPuzzleWinOverlay === 'function') showPuzzleWinOverlay(IMAGE_URL); }, 550);
         } else {
           status.textContent = 'Tap two pieces to swap';
         }
@@ -3169,64 +3091,12 @@
         order = shuffle(correctOrder());
         status.textContent = 'Tap two pieces to swap';
         render();
-        if (typeof hidePuzzleWinOverlay === 'function') hidePuzzleWinOverlay();
       }
 
       shuffleBtn.addEventListener('click', newGame);
       newGame();
     })();
-        // ===== PUZZLE SOLVED — FULLSCREEN HEART REVEAL =====
-    (function () {
-      const overlay = document.getElementById('puzzleWinOverlay');
-      const imageWrap = document.getElementById('puzzleWinImageWrap');
-      const rain = document.getElementById('puzzleWinRain');
-      const closeBtn = document.getElementById('puzzleWinClose');
-      if (!overlay || !imageWrap || !rain || !closeBtn) return;
 
-      const rainEmojis = ['💗', '❤️', '💕', '✨', '❣️', '💘', '💓'];
-      let rainBuilt = false;
-
-      function buildRain() {
-        if (rainBuilt) return;
-        rainBuilt = true;
-        const count = 34;
-        for (let i = 0; i < count; i++) {
-          const s = document.createElement('span');
-          s.textContent = rainEmojis[Math.floor(Math.random() * rainEmojis.length)];
-          const left = Math.random() * 100;
-          const duration = 3.2 + Math.random() * 3.2;
-          const delay = -Math.random() * 6;
-          const size = 1 + Math.random() * 1.1;
-          s.style.left = left + '%';
-          s.style.fontSize = size + 'rem';
-          s.style.animationDuration = duration + 's';
-          s.style.animationDelay = delay + 's';
-          rain.appendChild(s);
-        }
-      }
-
-      window.showPuzzleWinOverlay = function (imageUrl) {
-        imageWrap.innerHTML = '';
-        const img = document.createElement('img');
-        img.src = imageUrl;
-        img.alt = 'The completed photo';
-        imageWrap.appendChild(img);
-        buildRain();
-        overlay.classList.add('show');
-        document.body.style.overflow = 'hidden';
-      };
-
-      window.hidePuzzleWinOverlay = function () {
-        overlay.classList.remove('show');
-        document.body.style.overflow = '';
-      };
-
-      closeBtn.addEventListener('click', hidePuzzleWinOverlay);
-      overlay.addEventListener('click', (e) => { if (e.target === overlay) hidePuzzleWinOverlay(); });
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && overlay.classList.contains('show')) hidePuzzleWinOverlay();
-      });
-    })();
     // ===== CAKE PEARLS & SPRINKLES =====
     (function () {
       function scatterPearls(id, count) {
