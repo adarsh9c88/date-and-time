@@ -1414,7 +1414,74 @@
       </div>
     </div>
   </section>
+    <style>
+    /* ===== PUZZLE SOLVED — FULLSCREEN REVEAL ===== */
+    #puzzleWinOverlay{
+      position:fixed;inset:0;z-index:11000;
+      background:radial-gradient(circle at 50% 40%,rgba(60,30,20,.88),rgba(20,10,8,.94));
+      backdrop-filter:blur(6px);
+      display:flex;align-items:center;justify-content:center;
+      padding:2cm;box-sizing:border-box;
+      opacity:0;pointer-events:none;overflow:hidden;
+      transition:opacity .5s ease;
+    }
+    #puzzleWinOverlay.show{opacity:1;pointer-events:all}
 
+    .puzzle-win-rain{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+    .puzzle-win-rain span{
+      position:absolute;top:-8%;font-size:1.4rem;opacity:0;
+      filter:drop-shadow(0 0 6px rgba(255,183,197,.85)) drop-shadow(0 0 14px rgba(255,217,138,.5));
+      animation-name:puzzleHeartFall;animation-timing-function:linear;animation-iteration-count:infinite;
+    }
+    @keyframes puzzleHeartFall{
+      0%{transform:translateY(0) rotate(0deg);opacity:0}
+      8%{opacity:1}
+      92%{opacity:1}
+      100%{transform:translateY(112vh) rotate(360deg);opacity:0}
+    }
+
+    .puzzle-win-heart-frame{position:absolute;inset:2cm;pointer-events:none;z-index:2}
+    .puzzle-win-heart-frame svg{width:100%;height:100%;overflow:visible}
+    .puzzle-win-heart-path{
+      fill:none;stroke:#FFD98A;stroke-width:2.2;vector-effect:non-scaling-stroke;
+      filter:drop-shadow(0 0 10px rgba(255,217,138,.85)) drop-shadow(0 0 26px rgba(255,143,171,.6));
+      animation:puzzleHeartGlow 2.2s ease-in-out infinite;
+    }
+    @keyframes puzzleHeartGlow{
+      0%,100%{stroke-width:1.8;opacity:.8}
+      50%{stroke-width:3;opacity:1}
+    }
+
+    .puzzle-win-image-wrap{
+      position:relative;max-width:100%;max-height:100%;z-index:3;
+      border-radius:22px;overflow:hidden;
+      box-shadow:0 30px 90px rgba(0,0,0,.55),0 0 70px rgba(255,183,197,.4),0 0 0 3px rgba(255,255,255,.25);
+      opacity:0;transform:scale(.7);
+      transition:opacity .6s ease,transform .6s cubic-bezier(.34,1.56,.64,1);
+    }
+    #puzzleWinOverlay.show .puzzle-win-image-wrap{opacity:1;transform:scale(1)}
+    .puzzle-win-image-wrap img{display:block;max-width:100%;max-height:100%;object-fit:contain}
+
+    .puzzle-win-caption{
+      position:absolute;bottom:.4cm;left:50%;transform:translateX(-50%);
+      z-index:5;font-family:'Pacifico',cursive;color:#FFF6EA;font-size:clamp(1.1rem,3vw,1.6rem);
+      text-shadow:0 2px 14px rgba(0,0,0,.65);text-align:center;
+      opacity:0;transition:opacity .6s ease .3s;white-space:nowrap;
+    }
+    #puzzleWinOverlay.show .puzzle-win-caption{opacity:1}
+
+    .puzzle-win-close{
+      position:absolute;top:.5cm;right:.5cm;z-index:6;
+      width:42px;height:42px;border-radius:50%;
+      background:rgba(255,255,255,.14);border:2px solid rgba(255,255,255,.4);
+      color:#fff;font-size:1.25rem;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      backdrop-filter:blur(4px);transition:transform .2s ease,background .2s ease;
+    }
+    .puzzle-win-close:hover{transform:scale(1.08);background:rgba(255,255,255,.24)}
+
+    body.dark-theme #puzzleWinOverlay{background:radial-gradient(circle at 50% 40%,rgba(20,12,8,.92),rgba(8,5,3,.96))}
+  </style>
   <section id="puzzle">
     <h2 class="section-title reveal">Piece It Together 🧩</h2>
     <p class="section-sub reveal">Tap two tiles to swap them and reveal the photo</p>
