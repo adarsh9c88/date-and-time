@@ -3158,6 +3158,7 @@
           status.textContent = '🎉 You did it! Happy Birthday, Munni! 🎂';
           grid.querySelectorAll('.puzzle-tile').forEach(t => t.classList.add('solved-flash'));
           if (typeof celebrateSmall === 'function') celebrateSmall();
+          setTimeout(() => { if (typeof showPuzzleWinOverlay === 'function') showPuzzleWinOverlay(IMAGE_URL); }, 550);
         } else {
           status.textContent = 'Tap two pieces to swap';
         }
@@ -3168,12 +3169,64 @@
         order = shuffle(correctOrder());
         status.textContent = 'Tap two pieces to swap';
         render();
+        if (typeof hidePuzzleWinOverlay === 'function') hidePuzzleWinOverlay();
       }
 
       shuffleBtn.addEventListener('click', newGame);
       newGame();
     })();
+        // ===== PUZZLE SOLVED — FULLSCREEN HEART REVEAL =====
+    (function () {
+      const overlay = document.getElementById('puzzleWinOverlay');
+      const imageWrap = document.getElementById('puzzleWinImageWrap');
+      const rain = document.getElementById('puzzleWinRain');
+      const closeBtn = document.getElementById('puzzleWinClose');
+      if (!overlay || !imageWrap || !rain || !closeBtn) return;
 
+      const rainEmojis = ['💗', '❤️', '💕', '✨', '❣️', '💘', '💓'];
+      let rainBuilt = false;
+
+      function buildRain() {
+        if (rainBuilt) return;
+        rainBuilt = true;
+        const count = 34;
+        for (let i = 0; i < count; i++) {
+          const s = document.createElement('span');
+          s.textContent = rainEmojis[Math.floor(Math.random() * rainEmojis.length)];
+          const left = Math.random() * 100;
+          const duration = 3.2 + Math.random() * 3.2;
+          const delay = -Math.random() * 6;
+          const size = 1 + Math.random() * 1.1;
+          s.style.left = left + '%';
+          s.style.fontSize = size + 'rem';
+          s.style.animationDuration = duration + 's';
+          s.style.animationDelay = delay + 's';
+          rain.appendChild(s);
+        }
+      }
+
+      window.showPuzzleWinOverlay = function (imageUrl) {
+        imageWrap.innerHTML = '';
+        const img = document.createElement('img');
+        img.src = imageUrl;
+        img.alt = 'The completed photo';
+        imageWrap.appendChild(img);
+        buildRain();
+        overlay.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      };
+
+      window.hidePuzzleWinOverlay = function () {
+        overlay.classList.remove('show');
+        document.body.style.overflow = '';
+      };
+
+      closeBtn.addEventListener('click', hidePuzzleWinOverlay);
+      overlay.addEventListener('click', (e) => { if (e.target === overlay) hidePuzzleWinOverlay(); });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.classList.contains('show')) hidePuzzleWinOverlay();
+      });
+    })();
     // ===== CAKE PEARLS & SPRINKLES =====
     (function () {
       function scatterPearls(id, count) {
