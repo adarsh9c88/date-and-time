@@ -2,6 +2,7 @@
 (function () {
   // ===== PLAYLIST DATA =====
   const songFiles = [
+    'Vaaroon.mp3',
     '1. Khat.mp3',
     '15. Mahiya Tere Vekan Nu.mp3',
     '2. Afsos.mp3',
@@ -12,6 +13,7 @@
     '42. Dhadak - Title Track.mp3',
     '43. Jab Koi Baat - Recreated.mp3',
     '50. O Rangrez.mp3',
+    'Tu Banja Gali Benaras Ki.mp3',
     '56. Jo Tum Mere Ho.mp3',
     '56. Ranjha (From _Shershaah_).mp3',
     '68. Tere Bina Na Guzara E.mp3',
