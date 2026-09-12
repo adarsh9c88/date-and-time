@@ -933,147 +933,7 @@
       background:linear-gradient(to bottom, transparent, rgba(196,122,58,.25) 15%, rgba(196,122,58,.25) 85%, transparent);
     }
     body.dark-theme .love-rail-vine{background:linear-gradient(to bottom, transparent, rgba(232,168,85,.25) 15%, rgba(232,168,85,.25) 85%, transparent)}
-    @media (max-width:1300px){ .love-rail{display:none}
-                             
-    /* ================================================================
-   HERO ENHANCED: VINTAGE GLOW, 3D STICKERS & LIVE DOODLES
-   ================================================================ */
-#hero {
-  position: relative;
-  min-height: 100vh;
-  background: radial-gradient(circle at center, #26170d 0%, #170d07 65%, #0d0703 100%) !important;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  perspective: 1200px;
-}
-
-/* Fairy Lights Garland */
-.hero-garland-svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 220px;
-  pointer-events: none;
-  z-index: 4;
-}
-
-.hero-bottom-garland {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 180px;
-  pointer-events: none;
-  z-index: 4;
-}
-
-/* Floating 3D Doodle / Sticker Base */
-.hero-deco-item {
-  position: absolute;
-  z-index: 5;
-  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.3s ease;
-  user-select: none;
-}
-
-.hero-deco-item:hover {
-  transform: translateY(-8px) scale(1.08) rotate(3deg) !important;
-  filter: drop-shadow(0 12px 25px rgba(232, 168, 85, 0.45));
-}
-
-/* Live Floating Keyframes */
-@keyframes doodleFloatSoft {
-  0%, 100% { transform: translateY(0px) rotate(var(--rot, 0deg)); }
-  50% { transform: translateY(-12px) rotate(calc(var(--rot, 0deg) + 2deg)); }
-}
-
-@keyframes doodleFloatAlt {
-  0%, 100% { transform: translateY(0px) rotate(var(--rot, 0deg)); }
-  50% { transform: translateY(-16px) rotate(calc(var(--rot, 0deg) - 2deg)); }
-}
-
-@keyframes sparklePulse {
-  0%, 100% { transform: scale(0.85); opacity: 0.4; }
-  50% { transform: scale(1.25); opacity: 1; filter: drop-shadow(0 0 10px #ffe599); }
-}
-
-/* Pinned Aesthetic Notes */
-.hero-pin-note {
-  background: #2a1b12;
-  border: 1.5px dashed #c99252;
-  color: #f7dfb8;
-  font-family: 'Caveat', cursive;
-  padding: 16px 20px;
-  border-radius: 12px;
-  box-shadow: 0 14px 30px rgba(0,0,0,0.6), inset 0 0 20px rgba(0,0,0,0.3);
-  text-align: center;
-  max-width: 180px;
-  line-height: 1.35;
-  animation: doodleFloatSoft 6s ease-in-out infinite;
-}
-
-.hero-pin-note.left-note {
-  top: 18%;
-  left: 10%;
-  --rot: -8deg;
-  font-size: 1.15rem;
-}
-
-.hero-pin-note.right-note {
-  top: 17%;
-  right: 11%;
-  --rot: 7deg;
-  background: #dfbc88;
-  color: #4a2711;
-  border: none;
-  font-weight: 700;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.65);
-}
-
-.hero-pin-note::before {
-  content: '📌';
-  position: absolute;
-  top: -14px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1.2rem;
-}
-
-/* Doodled Text Elements */
-.hero-chalk-doodle {
-  font-family: 'Caveat', cursive;
-  color: #ffd992;
-  text-align: center;
-  line-height: 1.2;
-  font-size: 1.5rem;
-  text-shadow: 0 0 10px rgba(255, 217, 146, 0.4);
-  animation: doodleFloatAlt 7s ease-in-out infinite;
-}
-
-/* Golden Glowing Sparkles */
-.hero-gold-sparkle {
-  position: absolute;
-  color: #ffd276;
-  pointer-events: none;
-  animation: sparklePulse 3s ease-in-out infinite;
-}
-
-/* Custom munni Ribbon & Heart in Main Title */
-.hero-poster-name {
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-}
-
-.hero-name-ribbon {
-  display: inline-block;
-  font-size: clamp(2.6rem, 6vw, 4.2rem);
-  filter: drop-shadow(0 6px 14px rgba(245, 71, 106, 0.5));
-  animation: doodleFloatSoft 3.5s ease-in-out infinite;
-}}
+    @media (max-width:1300px){ .love-rail{display:none} }
   </style>
 </head>
 
@@ -1147,129 +1007,44 @@
   </nav>
 
   <section id="hero">
-  <!-- Glowing Background Ring & Canvas -->
-  <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden" id="heroBg"></div>
-  <div class="hero-glow-ring"></div>
+    <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden" id="heroBg"></div>
+    <div class="hero-glow-ring"></div>
+    <span class="teddy-float" style="top:10%;left:5%;font-size:2.5rem;animation-duration:4s">🐻</span>
+    <span class="teddy-float" style="top:20%;right:8%;font-size:1.8rem;animation-duration:5s;animation-delay:-1s">🍯</span>
+    <span class="teddy-float" style="bottom:18%;left:12%;font-size:2rem;animation-duration:6s;animation-delay:-2s">🌰</span>
+    <span class="teddy-float" style="bottom:25%;right:15%;font-size:1.5rem;animation-duration:4.5s;animation-delay:-3s">🍂</span>
 
-  <!-- Top Fairy Light Garlands -->
-  <svg class="hero-garland-svg" viewBox="0 0 1440 220" preserveAspectRatio="none">
-    <defs>
-      <filter id="bulbGlow" x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur stdDeviation="6" result="blur" />
-        <feMerge>
-          <feMergeNode in="blur" />
-          <feMergeNode in="SourceGraphic" />
-        </feMerge>
-      </filter>
-    </defs>
-    <!-- Left Catenary -->
-    <path d="M -20,10 Q 180,180 380,40 Q 560,190 720,25" fill="none" stroke="#6d472b" stroke-width="1.8" opacity="0.65"/>
-    <!-- Right Catenary -->
-    <path d="M 720,25 Q 900,190 1080,40 Q 1260,180 1460,10" fill="none" stroke="#6d472b" stroke-width="1.8" opacity="0.65"/>
-    <!-- Bulbs & Glowing Hearts -->
-    <circle cx="90" cy="110" r="5" fill="#ffe29a" filter="url(#bulbGlow)"/>
-    <circle cx="210" cy="140" r="5" fill="#ffe29a" filter="url(#bulbGlow)"/>
-    <circle cx="330" cy="80" r="5" fill="#ffe29a" filter="url(#bulbGlow)"/>
-    <circle cx="480" cy="150" r="5" fill="#ffe29a" filter="url(#bulbGlow)"/>
-    <circle cx="620" cy="90" r="5" fill="#ffe29a" filter="url(#bulbGlow)"/>
-    <circle cx="820" cy="90" r="5" fill="#ffe29a" filter="url(#bulbGlow)"/>
-    <circle cx="960" cy="150" r="5" fill="#ffe29a" filter="url(#bulbGlow)"/>
-    <circle cx="1110" cy="80" r="5" fill="#ffe29a" filter="url(#bulbGlow)"/>
-    <circle cx="1230" cy="140" r="5" fill="#ffe29a" filter="url(#bulbGlow)"/>
-    <circle cx="1350" cy="110" r="5" fill="#ffe29a" filter="url(#bulbGlow)"/>
-  </svg>
+    <div class="hero-poster">
+      <div class="hero-eyebrow reveal">🎂 It's Your Special Day</div>
 
-  <!-- Left Side Doodles & Stickers -->
-  <div class="hero-deco-item hero-pin-note left-note">
-    You make the world brighter just by being you 🤍
-  </div>
-
-  <div class="hero-deco-item" style="top:44%;left:11%;font-size:4.2rem;--rot:-6deg;animation:doodleFloatSoft 5s infinite;">
-    🧸
-  </div>
-
-  <div class="hero-deco-item" style="bottom:12%;left:3%;font-size:4.5rem;--rot:12deg;animation:doodleFloatAlt 6.5s infinite;">
-    💐
-  </div>
-
-  <!-- Right Side Doodles & Stickers -->
-  <div class="hero-deco-item hero-pin-note right-note">
-    More happiness<br>More dreams<br>More you ♡
-  </div>
-
-  <div class="hero-deco-item" style="top:48%;right:12%;font-size:3.6rem;--rot:-5deg;animation:doodleFloatSoft 5.8s infinite;">
-    💌
-  </div>
-
-  <div class="hero-deco-item hero-chalk-doodle" style="bottom:22%;right:12%;--rot:6deg;">
-    ˗ˏˋ Keep<br>shining<br>always ˎˊ˗
-  </div>
-
-  <div class="hero-deco-item" style="bottom:10%;right:4%;font-size:4.2rem;--rot:4deg;animation:doodleFloatAlt 5s infinite;">
-    🐱
-  </div>
-
-  <!-- Golden Stars & Hearts -->
-  <div class="hero-gold-sparkle" style="top:22%;left:22%;font-size:1.8rem;animation-delay:0s;">✦</div>
-  <div class="hero-gold-sparkle" style="top:34%;left:26%;font-size:1.3rem;animation-delay:-1.2s;">✨</div>
-  <div class="hero-gold-sparkle" style="top:48%;left:19%;font-size:1.4rem;animation-delay:-0.5s;">💖</div>
-  <div class="hero-gold-sparkle" style="top:25%;right:24%;font-size:2rem;animation-delay:-0.8s;">✦</div>
-  <div class="hero-gold-sparkle" style="top:42%;right:26%;font-size:1.2rem;animation-delay:-2s;">💫</div>
-  <div class="hero-gold-sparkle" style="bottom:22%;right:22%;font-size:1.5rem;animation-delay:-1.5s;">💛</div>
-  <div class="hero-gold-sparkle" style="bottom:25%;left:20%;font-size:1.6rem;animation-delay:-0.9s;">🌸</div>
-
-  <!-- Central Poster Content -->
-  <div class="hero-poster">
-    <div class="hero-eyebrow reveal">🎂 It's Your Special Day</div>
-
-    <div class="hero-photo-stage reveal from-scale">
-      <div class="hero-photo-halo"></div>
-      <div class="hero-photo-orbit">
-        <div class="orbit-item" style="transform:rotate(0deg) translate(var(--orbit-r))"><span>🌸</span></div>
-        <div class="orbit-item" style="transform:rotate(60deg) translate(var(--orbit-r))"><span>✨</span></div>
-        <div class="orbit-item" style="transform:rotate(120deg) translate(var(--orbit-r))"><span>💫</span></div>
-        <div class="orbit-item" style="transform:rotate(180deg) translate(var(--orbit-r))"><span>💛</span></div>
-        <div class="orbit-item" style="transform:rotate(240deg) translate(var(--orbit-r))"><span>🌟</span></div>
-        <div class="orbit-item" style="transform:rotate(300deg) translate(var(--orbit-r))"><span>🍂</span></div>
+      <div class="hero-photo-stage reveal from-scale">
+        <div class="hero-photo-halo"></div>
+        <div class="hero-photo-orbit">
+          <div class="orbit-item" style="transform:rotate(0deg) translate(var(--orbit-r))"><span>🌸</span></div>
+          <div class="orbit-item" style="transform:rotate(60deg) translate(var(--orbit-r))"><span>✨</span></div>
+          <div class="orbit-item" style="transform:rotate(120deg) translate(var(--orbit-r))"><span>💫</span></div>
+          <div class="orbit-item" style="transform:rotate(180deg) translate(var(--orbit-r))"><span>💛</span></div>
+          <div class="orbit-item" style="transform:rotate(240deg) translate(var(--orbit-r))"><span>🌟</span></div>
+          <div class="orbit-item" style="transform:rotate(300deg) translate(var(--orbit-r))"><span>🍂</span></div>
+        </div>
+        <div class="hero-photo-frame">
+          <!-- 👇 Swap this src for whichever photo of her you want front and center.
+               Other photos already used on the page: images/3.png, images/7.png -->
+          <img src="images/1.png" alt="Munni">
+        </div>
+        <div class="hero-age-badge">
+          <span class="hero-age-num">20</span>
+          <span class="hero-age-cake">🎂</span>
+        </div>
       </div>
 
-      <div class="hero-photo-frame">
-        <img src="images/1.png" alt="Munni">
-      </div>
-
-      <div class="hero-age-badge">
-        <span class="hero-age-num">20</span>
-        <span class="hero-age-cake">🎂</span>
-      </div>
+      <h1 class="hero-poster-title reveal">Happy 20th Birthday</h1>
+      <div class="hero-poster-name reveal">Munni <span class="hero-poster-ribbon" style="display:inline-block; margin-left:14px; -webkit-text-fill-color:initial;">💓</span></div>
+      <p class="hero-poster-wish reveal">
+        Twenty looks so beautiful on you. Here's to a year as bright, kind, and wonderful as you are — happy birthday, Munni. 🌸
+      </p>
     </div>
-
-    <h1 class="hero-poster-title reveal" style="display:flex;align-items:center;justify-content:center;gap:12px;">
-      <span style="font-size:1.5rem;color:#f0c98a;">♡</span>
-      Happy 20th Birthday
-      <span style="font-size:1.5rem;color:#f0c98a;">♡</span>
-    </h1>
-
-    <div class="hero-poster-name reveal">
-      <span>Munni</span>
-      <span class="hero-name-ribbon">🎀</span>
-    </div>
-
-    <p class="hero-poster-wish reveal">
-      Twenty looks so beautiful on you. Here's to a year as bright, kind, and wonderful as you are — happy birthday, Munni. 🌸
-    </p>
-  </div>
-
-  <!-- Bottom Vine & Fairy Lights Garland -->
-  <svg class="hero-bottom-garland" viewBox="0 0 1440 180" preserveAspectRatio="none">
-    <path d="M -20,160 Q 360,60 720,130 Q 1080,60 1460,160" fill="none" stroke="#6d472b" stroke-width="2" opacity="0.6"/>
-    <!-- Central Heart Loop on Wire -->
-    <path d="M 705,125 C 695,100 720,95 720,115 C 720,95 745,100 735,125 Z" fill="none" stroke="#ffd276" stroke-width="2.2"/>
-    <circle cx="200" cy="118" r="4.5" fill="#ffe29a" filter="url(#bulbGlow)"/>
-    <circle cx="440" cy="85" r="4.5" fill="#ffe29a" filter="url(#bulbGlow)"/>
-    <circle cx="1000" cy="85" r="4.5" fill="#ffe29a" filter="url(#bulbGlow)"/>
-    <circle cx="1240" cy="118" r="4.5" fill="#ffe29a" filter="url(#bulbGlow)"/>
-  </svg>
-</section>
+  </section>
 
   <section id="wishes">
     <h2 class="section-title reveal">A Letter For You 💌</h2>
