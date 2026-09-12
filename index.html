@@ -908,12 +908,41 @@
     body.dark-theme .hero-age-badge{background:linear-gradient(135deg,#8B5E2A,#3A2A1D);box-shadow:0 0 0 4px #1B140E, 0 8px 20px rgba(0,0,0,.55)}
     body.dark-theme .hero-poster-title{color:#F0C98A}
     body.dark-theme .hero-poster-wish{color:#C9AF92}
+
+    /* ===== LOVE-THEMED SIDE RAILS — fills the empty gutters on wide screens ===== */
+    .love-rail{
+      position:fixed;top:0;bottom:0;width:120px;pointer-events:none;
+      z-index:5;overflow:hidden;opacity:.6;
+    }
+    .love-rail.love-rail-left{left:0}
+    .love-rail.love-rail-right{right:0}
+    .love-rail-item{
+      position:absolute;bottom:-60px;font-size:1.6rem;opacity:0;
+      animation:loveRailFloat linear infinite;
+      filter:drop-shadow(0 3px 6px rgba(139,69,19,.25));
+    }
+    @keyframes loveRailFloat{
+      0%{transform:translateY(0) translateX(0) rotate(-6deg) scale(.9);opacity:0}
+      8%{opacity:.85}
+      50%{transform:translateY(-50vh) translateX(10px) rotate(6deg) scale(1.05)}
+      92%{opacity:.7}
+      100%{transform:translateY(-110vh) translateX(-10px) rotate(-6deg) scale(.9);opacity:0}
+    }
+    .love-rail-vine{
+      position:absolute;top:0;bottom:0;width:2px;left:50%;transform:translateX(-50%);
+      background:linear-gradient(to bottom, transparent, rgba(196,122,58,.25) 15%, rgba(196,122,58,.25) 85%, transparent);
+    }
+    body.dark-theme .love-rail-vine{background:linear-gradient(to bottom, transparent, rgba(232,168,85,.25) 15%, rgba(232,168,85,.25) 85%, transparent)}
+    @media (max-width:1300px){ .love-rail{display:none} }
   </style>
 </head>
 
 <body>
 
   <div id="cursorTrailLayer"></div>
+
+  <div class="love-rail love-rail-left" id="loveRailLeft"><div class="love-rail-vine"></div></div>
+  <div class="love-rail love-rail-right" id="loveRailRight"><div class="love-rail-vine"></div></div>
 
   <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle dark and light theme" title="Toggle dark / light theme">
     <span class="ttb-icon" id="themeToggleIcon">🌙</span>
@@ -2763,6 +2792,36 @@
   </footer>
 
   <script>
+    // ===== LOVE-THEMED SIDE RAILS =====
+    (function () {
+      const leftRail = document.getElementById('loveRailLeft');
+      const rightRail = document.getElementById('loveRailRight');
+      if (!leftRail || !rightRail) return;
+
+      const loveEmojis = ['💕', '💖', '❤️', '🌹', '💌', '🐻'];
+      const DURATION = 14;                 // same for every item — keeps rhythm predictable
+      const COUNT = loveEmojis.length;      // one slot per emoji, evenly spaced
+      const STEP = DURATION / COUNT;        // gap between each item's start time
+      const positions = [18, 34, 50, 66, 82, 50]; // fixed left% slots, no random overlap
+
+      function populateRail(rail) {
+        for (let i = 0; i < COUNT; i++) {
+          const item = document.createElement('span');
+          item.className = 'love-rail-item';
+          item.textContent = loveEmojis[i];
+          item.style.left = positions[i] + '%';
+          item.style.fontSize = '1.6rem';
+          item.style.animationDuration = DURATION + 's';
+          item.style.animationDelay = (-i * STEP) + 's';
+          rail.appendChild(item);
+        }
+      }
+
+      // both rails use the identical schedule so left and right release together
+      populateRail(leftRail);
+      populateRail(rightRail);
+    })();
+
     // ===== LOADER =====
     const lfEmojis = ['🐻', '🍯', '🌰', '🍂', '🐾', '🤎', '✨', '🌸', '☕', '🎀', '💛', '🌟', '🎵'];
     const lfc = document.getElementById('loadFloaties');
