@@ -843,6 +843,71 @@
       .vm3-roll-slot{width:150px;height:150px}
       .vm3-note-card{left:40%;width:270px;min-height:270px;padding:32px 20px 22px}
     }
+
+    /* ===== HERO POSTER REDESIGN — photo-centered birthday wish ===== */
+    .hero-glow-ring{
+      position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      width:600px;height:600px;max-width:90vw;max-height:90vw;
+      background:radial-gradient(circle, rgba(232,168,85,.35) 0%, rgba(212,149,106,.18) 40%, transparent 70%);
+      filter:blur(10px);pointer-events:none;z-index:0;
+      animation:heroGlowPulse 5s ease-in-out infinite;
+    }
+    @keyframes heroGlowPulse{0%,100%{opacity:.7;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}}
+
+    .hero-poster{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;max-width:640px;margin:0 auto;padding:0 10px}
+
+    .hero-eyebrow{display:inline-block;background:rgba(196,122,58,.15);border:1.5px solid rgba(196,122,58,.4);border-radius:50px;padding:7px 20px;font-size:.82rem;font-weight:700;color:#8B4513;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:18px}
+
+    .hero-photo-stage{position:relative;width:clamp(220px,42vw,320px);aspect-ratio:1;margin:0 auto 26px;--orbit-r:150px}
+    @media (max-width:600px){.hero-photo-stage{--orbit-r:120px}}
+
+    .hero-photo-halo{position:absolute;inset:-14px;border-radius:50%;background:radial-gradient(circle, rgba(255,255,255,.55), rgba(255,183,197,.35) 45%, rgba(196,122,58,.15) 70%, transparent 80%);filter:blur(6px);animation:heroHaloPulse 3.4s ease-in-out infinite}
+    @keyframes heroHaloPulse{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.07);opacity:1}}
+
+    .hero-photo-orbit{position:absolute;inset:0;animation:heroOrbitSpin 22s linear infinite}
+    @keyframes heroOrbitSpin{100%{transform:rotate(360deg)}}
+    .orbit-item{position:absolute;top:50%;left:50%;width:0;height:0}
+    .orbit-item span{position:absolute;left:0;top:0;transform:translate(-50%,-50%);font-size:1.4rem;display:inline-block;animation:heroOrbitBob 2.4s ease-in-out infinite;filter:drop-shadow(0 3px 6px rgba(139,69,19,.3))}
+    .orbit-item:nth-child(2) span{animation-delay:-.4s}
+    .orbit-item:nth-child(3) span{animation-delay:-.8s}
+    .orbit-item:nth-child(4) span{animation-delay:-1.2s}
+    .orbit-item:nth-child(5) span{animation-delay:-1.6s}
+    .orbit-item:nth-child(6) span{animation-delay:-2s}
+    @keyframes heroOrbitBob{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.25)}}
+
+    .hero-photo-frame{position:absolute;inset:0;border-radius:50%;overflow:hidden;
+      box-shadow:0 0 0 6px #FDF6EE, 0 0 0 9px #E8A855, 0 0 0 11px rgba(139,69,19,.25), 0 25px 60px rgba(139,69,19,.35);
+      z-index:2;
+    }
+    .hero-photo-frame img{width:100%;height:100%;object-fit:cover;display:block}
+
+    .hero-age-badge{
+      position:absolute;bottom:2%;right:0%;z-index:3;
+      width:64px;height:64px;border-radius:50%;
+      background:linear-gradient(135deg,#D4956A,#8B4513);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      box-shadow:0 0 0 4px #FDF6EE, 0 8px 20px rgba(139,69,19,.45);
+      animation:heroBadgePop 2.6s ease-in-out infinite;
+    }
+    @keyframes heroBadgePop{0%,100%{transform:scale(1) rotate(-4deg)}50%{transform:scale(1.08) rotate(4deg)}}
+    .hero-age-num{font-family:'Pacifico',cursive;font-size:1.3rem;color:#fff;line-height:1}
+    .hero-age-cake{font-size:.85rem;margin-top:-2px}
+
+    .hero-poster-title{font-family:'Pacifico',cursive;font-size:clamp(1.8rem,4.2vw,2.6rem);color:#8B4513;margin:0}
+    .hero-poster-name{font-family:'Pacifico',cursive;font-size:clamp(2.8rem,7vw,4.5rem);margin:0 0 14px;letter-spacing:.04em;padding-left:.1em;
+      background:linear-gradient(90deg,#C47A3A,#8B4513,#D4956A);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    }
+    .hero-poster-ribbon{-webkit-text-fill-color:initial;display:inline-block;animation:heroRibbonWiggle 2s ease-in-out infinite}
+    @keyframes heroRibbonWiggle{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+    .hero-poster-wish{font-size:1.02rem;color:var(--text-mid);line-height:1.7;font-weight:600;max-width:480px;margin:0 auto}
+
+    body.dark-theme .hero-glow-ring{background:radial-gradient(circle, rgba(240,201,138,.28) 0%, rgba(150,110,200,.14) 40%, transparent 70%)}
+    body.dark-theme .hero-eyebrow{background:rgba(232,168,85,.15);color:#F0C98A;border-color:rgba(232,168,85,.4)}
+    body.dark-theme .hero-photo-halo{background:radial-gradient(circle, rgba(240,201,138,.35), rgba(232,168,85,.2) 45%, rgba(150,110,200,.12) 70%, transparent 80%)}
+    body.dark-theme .hero-photo-frame{box-shadow:0 0 0 6px #1B140E, 0 0 0 9px #E8A855, 0 0 0 11px rgba(0,0,0,.4), 0 25px 60px rgba(0,0,0,.55)}
+    body.dark-theme .hero-age-badge{background:linear-gradient(135deg,#8B5E2A,#3A2A1D);box-shadow:0 0 0 4px #1B140E, 0 8px 20px rgba(0,0,0,.55)}
+    body.dark-theme .hero-poster-title{color:#F0C98A}
+    body.dark-theme .hero-poster-wish{color:#C9AF92}
   </style>
 </head>
 
@@ -914,35 +979,41 @@
 
   <section id="hero">
     <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden" id="heroBg"></div>
+    <div class="hero-glow-ring"></div>
     <span class="teddy-float" style="top:10%;left:5%;font-size:2.5rem;animation-duration:4s">🐻</span>
     <span class="teddy-float" style="top:20%;right:8%;font-size:1.8rem;animation-duration:5s;animation-delay:-1s">🍯</span>
     <span class="teddy-float" style="bottom:18%;left:12%;font-size:2rem;animation-duration:6s;animation-delay:-2s">🌰</span>
     <span class="teddy-float" style="bottom:25%;right:15%;font-size:1.5rem;animation-duration:4.5s;animation-delay:-3s">🍂</span>
-    <div class="hero-inner">
-      <div class="hero-text">
-        <div class="hero-tag reveal">🎂 It's Your Special Day</div>
-        <h1 class="hero-title reveal">
-          Happy Birthday,
-          <span class="hero-name">Munni! 🎀</span>
-        </h1>
-        <p class="hero-desc reveal">
-          Wishing you this year, every year, every month, every week, every day, every hour, every second, every mili second
-          wish come True..
-          You are the Best and favourite or unexcepted Chapter of my BOOK🌸🎵🎨
-        </p>
-        <div class="hero-chips reveal">
-          <span class="chip">🌸 Nature Lover</span>
-          <span class="chip">🎨 Art Creator</span>
-          <span class="chip">🎨 Artist Soul</span>
-          <span class="chip">🎵 Music Heart</span>
-          <span class="chip">☕ Coffee Girl</span>
-          <span class="chip">👩‍⚕️ Future Doctor</span>
-          <span class="chip">🩺 MBBS Warrior</span>
+
+    <div class="hero-poster">
+      <div class="hero-eyebrow reveal">🎂 It's Your Special Day</div>
+
+      <div class="hero-photo-stage reveal from-scale">
+        <div class="hero-photo-halo"></div>
+        <div class="hero-photo-orbit">
+          <div class="orbit-item" style="transform:rotate(0deg) translate(var(--orbit-r))"><span>🌸</span></div>
+          <div class="orbit-item" style="transform:rotate(60deg) translate(var(--orbit-r))"><span>✨</span></div>
+          <div class="orbit-item" style="transform:rotate(120deg) translate(var(--orbit-r))"><span>💫</span></div>
+          <div class="orbit-item" style="transform:rotate(180deg) translate(var(--orbit-r))"><span>💛</span></div>
+          <div class="orbit-item" style="transform:rotate(240deg) translate(var(--orbit-r))"><span>🌟</span></div>
+          <div class="orbit-item" style="transform:rotate(300deg) translate(var(--orbit-r))"><span>🍂</span></div>
+        </div>
+        <div class="hero-photo-frame">
+          <!-- 👇 Swap this src for whichever photo of her you want front and center.
+               Other photos already used on the page: images/3.png, images/7.png -->
+          <img src="images/1.png" alt="Munni">
+        </div>
+        <div class="hero-age-badge">
+          <span class="hero-age-num">20</span>
+          <span class="hero-age-cake">🎂</span>
         </div>
       </div>
-      <div class="hero-chibi-wrap">
-        <img src="images/1.png" class="hero-chibi reveal from-right" alt="N chibi excited">
-      </div>
+
+      <h1 class="hero-poster-title reveal">Happy 20th Birthday</h1>
+      <div class="hero-poster-name reveal">Munni <span class="hero-poster-ribbon">🎀</span></div>
+      <p class="hero-poster-wish reveal">
+        Twenty looks so beautiful on you. Here's to a year as bright, kind, and wonderful as you are — happy birthday, Munni. 🌸
+      </p>
     </div>
   </section>
 
