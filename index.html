@@ -1225,10 +1225,22 @@
     body.dark-theme .vm3-heart-fill-quote{color:#3D2314}
     body.dark-theme .vm3-heart-fill-sign{color:#6B3A2A}
 
-    .vm3-caption{
-      .vm3-caption{margin-top:14px;font-family:'Quicksand',sans-serif;font-weight:700;font-size:.86rem;color:#8B4513;opacity:0;transition:opacity .5s ease;text-align:center; transform: translate(20px, -60px);}
-    }
-    .vm3-caption.vm3-show{opacity:1;animation:vm3CaptionPulse 1.6s ease-in-out infinite}
+    .vm3-caption {
+  margin-top: 14px;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  font-size: .86rem;
+  color: #8B4513;
+  opacity: 0;
+  transition: opacity .5s ease;
+  text-align: center;
+  transform: translate(20px, -60px);
+}
+
+.vm3-caption.vm3-show {
+  opacity: 1;
+  animation: vm3CaptionPulse 1.6s ease-in-out infinite;
+}
     @keyframes vm3CaptionPulse{0%,100%{opacity:1}50%{opacity:.55}}
 
     .vm3-reroll-btn{
