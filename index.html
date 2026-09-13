@@ -1008,17 +1008,45 @@
 
   <section id="hero">
     <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden" id="heroBg"></div>
+    <div id="heroTwinkleLayer"></div>
     <div class="hero-glow-ring"></div>
+        <div class="hero-vine-col left" id="heroVineLeft"></div>
+    <div class="hero-vine-col right" id="heroVineRight"></div>
+
+    <span class="hero-doodle hero-doodle-bear">🧸<span class="hero-doodle-accent">💗</span></span>
+    <span class="hero-doodle hero-doodle-cat">🐱<span class="hero-doodle-accent">✨</span></span>
+    <span class="hero-doodle hero-doodle-envelope">💌</span>
     <span class="teddy-float" style="top:10%;left:5%;font-size:2.5rem;animation-duration:4s">🐻</span>
     <span class="teddy-float" style="top:20%;right:8%;font-size:1.8rem;animation-duration:5s;animation-delay:-1s">🍯</span>
     <span class="teddy-float" style="bottom:18%;left:12%;font-size:2rem;animation-duration:6s;animation-delay:-2s">🌰</span>
     <span class="teddy-float" style="bottom:25%;right:15%;font-size:1.5rem;animation-duration:4.5s;animation-delay:-3s">🍂</span>
 
+    <div class="hero-notes-ring">
+      <div class="hero-note hero-note-ul" style="--rot:-7deg">
+        <span class="hero-note-heart tl">💛</span><span class="hero-note-heart tr">💛</span><span class="hero-note-heart bl">💛</span><span class="hero-note-heart br">💛</span>
+        You make the world<br>brighter just by<br>being you ♡
+      </div>
+      <div class="hero-note hero-note-ur" style="--rot:6deg">
+        <span class="hero-note-heart tl">💕</span><span class="hero-note-heart tr">💕</span><span class="hero-note-heart bl">💕</span><span class="hero-note-heart br">💕</span>
+        More happiness,<br>more dreams,<br>more you
+      </div>
+      <div class="hero-note hero-note-ll" style="--rot:6deg">
+        <span class="hero-note-heart tl">🌸</span><span class="hero-note-heart tr">🌸</span><span class="hero-note-heart bl">🌸</span><span class="hero-note-heart br">🌸</span>
+        Keep shining,<br>always ♡
+      </div>
+      <div class="hero-note hero-note-lr" style="--rot:-6deg">
+        <span class="hero-note-heart tl">✨</span><span class="hero-note-heart tr">✨</span><span class="hero-note-heart bl">✨</span><span class="hero-note-heart br">✨</span>
+        Twenty and<br>absolutely<br>glowing ✨
+      </div>
+    </div>
+
     <div class="hero-poster">
-      <div class="hero-eyebrow reveal">🎂 It's Your Special Day</div>
+      <div class="hero-eyebrow reveal">✨ It's Your Special Day ✨</div>
 
       <div class="hero-photo-stage reveal from-scale">
         <div class="hero-photo-halo"></div>
+        <div class="hero-photo-ring"></div>
+        <div class="hero-sparkle-halo" id="heroSparkleHalo"></div>
         <div class="hero-photo-orbit">
           <div class="orbit-item" style="transform:rotate(0deg) translate(var(--orbit-r))"><span>🌸</span></div>
           <div class="orbit-item" style="transform:rotate(60deg) translate(var(--orbit-r))"><span>✨</span></div>
@@ -1040,6 +1068,7 @@
 
       <h1 class="hero-poster-title reveal">Happy 20th Birthday</h1>
       <div class="hero-poster-name reveal">Munni <span class="hero-poster-ribbon" style="display:inline-block; margin-left:14px; -webkit-text-fill-color:initial;">💓</span></div>
+      <span class="hero-poster-underline reveal"></span>
       <p class="hero-poster-wish reveal">
         Twenty looks so beautiful on you. Here's to a year as bright, kind, and wonderful as you are — happy birthday, Munni. 🌸
       </p>
@@ -2695,6 +2724,197 @@
       .owl-royal-row{grid-template-columns:repeat(2,1fr);gap:20px 14px}
       .owl-royal-card{max-width:130px}
     }
+    /* ================================================================
+       HERO STICKERS / DOODLES — four sticky notes tucked into the empty
+       hero corners (well clear of the circular photo), floating
+       bear/cat/envelope, side flower vines. Purely additive.
+    ================================================================ */
+    .hero-notes-ring{position:absolute;inset:0;z-index:5;pointer-events:none}
+    .hero-note{
+      position:absolute;
+      background:#F5E3C6;border-radius:3px;
+      padding:22px 24px;max-width:250px;
+      font-family:'Caveat',cursive;font-size:1.5rem;line-height:1.42;color:#4A2E17;
+      box-shadow:0 16px 34px rgba(139,69,19,.34), 0 0 0 1px rgba(255,255,255,.4) inset;
+      text-align:center;
+      animation:hero-note-sway 5s ease-in-out infinite;
+    }
+    .hero-note::before{
+      content:'';position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-3deg);
+      width:52px;height:18px;background:rgba(255,255,255,.45);
+      border:1px solid rgba(255,255,255,.55);
+      box-shadow:0 2px 6px rgba(139,69,19,.2);
+    }
+    .hero-note-heart{
+      position:absolute;font-size:1.05rem;color:#C47A3A;
+      filter:drop-shadow(0 2px 3px rgba(139,69,19,.3));
+      pointer-events:none;
+    }
+    .hero-note-heart.tl{top:-11px;left:-11px}
+    .hero-note-heart.tr{top:-11px;right:-11px}
+    .hero-note-heart.bl{bottom:-11px;left:-11px}
+    .hero-note-heart.br{bottom:-11px;right:-11px}
+    @keyframes hero-note-sway{
+      0%,100%{transform:translate(var(--inx,0px),var(--iny,0px)) rotate(var(--rot,-4deg))}
+      50%{transform:translate(var(--inx,0px),var(--iny,0px)) rotate(calc(var(--rot,-4deg) * -0.55))}
+    }
+    .hero-note.hero-note-ul{top:9%;left:3%;--inx:34px;--iny:26px}
+    .hero-note.hero-note-ur{top:9%;right:3%;--inx:-34px;--iny:26px}
+    .hero-note.hero-note-ll{bottom:9%;left:3%;--inx:34px;--iny:-26px}
+    .hero-note.hero-note-lr{bottom:9%;right:3%;--inx:-34px;--iny:-26px}
+    body.dark-theme .hero-note{background:#3A2A1D;color:#F1E3D3;box-shadow:0 16px 34px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.08) inset}
+    body.dark-theme .hero-note::before{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15)}
+    body.dark-theme .hero-note-heart{color:#F0C98A}
+    @media (max-width:1200px){
+      .hero-note{font-size:1.25rem;padding:18px 20px;max-width:200px}
+      .hero-note.hero-note-ul,.hero-note.hero-note-ll{left:1.5%;--inx:20px}
+      .hero-note.hero-note-ur,.hero-note.hero-note-lr{right:1.5%;--inx:-20px}
+      .hero-note.hero-note-ul,.hero-note.hero-note-ur{--iny:16px}
+      .hero-note.hero-note-ll,.hero-note.hero-note-lr{--iny:-16px}
+    }
+    @media (max-width:1000px){ .hero-notes-ring{display:none} }
+
+    .hero-doodle{
+      position:absolute;font-size:2.2rem;z-index:4;
+      filter:drop-shadow(0 6px 10px rgba(139,69,19,.3));
+      animation:hero-doodle-bob 3.2s ease-in-out infinite;
+    }
+    @keyframes hero-doodle-bob{
+      0%,100%{transform:translateY(0) rotate(-5deg)}
+      50%{transform:translateY(-10px) rotate(5deg)}
+    }
+    .hero-doodle-bear{bottom:9%;left:5%}
+    .hero-doodle-cat{bottom:7%;right:5%;animation-delay:-1.5s}
+    .hero-doodle-envelope{top:30%;right:7%;animation-delay:-2.2s;font-size:1.8rem}
+    @media (max-width:760px){ .hero-doodle{font-size:1.6rem} }
+    @media (max-width:520px){ .hero-doodle{display:none} }
+
+    .hero-vine-col{position:absolute;top:0;bottom:0;width:64px;z-index:2;overflow:hidden;opacity:.9;pointer-events:none}
+    .hero-vine-col.left{left:4px}
+    .hero-vine-col.right{right:4px}
+    .hero-vine-item{position:absolute;left:50%;transform:translateX(-50%);font-size:1.4rem;filter:drop-shadow(0 3px 6px rgba(139,69,19,.25))}
+    @media (max-width:820px){ .hero-vine-col{display:none} }
+
+    /* ================================================================
+       HERO ENHANCEMENT PASS — corner string-light garlands with bows,
+       a twinkling star field, tighter centered alignment for the
+       poster text, and a richer glowing photo frame. Purely additive;
+       nothing above this block is touched.
+    ================================================================ */
+
+    /* ---------- ambient twinkle star field across the whole hero ---------- */
+    #heroTwinkleLayer{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+    .hero-twinkle{position:absolute;border-radius:50%;background:#fff;opacity:0;animation:heroTwinkle ease-in-out infinite}
+    @keyframes heroTwinkle{0%,100%{opacity:0;transform:scale(.4)}50%{opacity:var(--tw-op,.9);transform:scale(1)}}
+    body:not(.dark-theme) .hero-twinkle{background:#E8A855}
+
+    /* ---------- refined, tightly centered poster alignment ---------- */
+    .hero-poster{gap:10px}
+    .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;letter-spacing:1.4px}
+    .hero-poster-title{letter-spacing:.01em}
+    .hero-poster-name{position:relative;line-height:1.05}
+    .hero-poster-underline{display:block;width:min(220px,60%);height:6px;margin:2px auto 16px;border-radius:6px;
+      background:linear-gradient(90deg,transparent,#E8A855,#C47A3A,#E8A855,transparent);
+      opacity:.75;animation:heroUnderlineGlow 3s ease-in-out infinite;}
+    @keyframes heroUnderlineGlow{0%,100%{opacity:.55;transform:scaleX(.92)}50%{opacity:1;transform:scaleX(1)}}
+    .hero-poster-wish{position:relative}
+
+    /* ---------- richer, more layered photo frame ---------- */
+    .hero-photo-frame{box-shadow:0 0 0 6px #FDF6EE, 0 0 0 9px #E8A855, 0 0 0 11px rgba(139,69,19,.25), 0 0 40px 6px rgba(232,168,85,.35), 0 25px 60px rgba(139,69,19,.35)}
+    body.dark-theme .hero-photo-frame{box-shadow:0 0 0 6px #1B140E, 0 0 0 9px #E8A855, 0 0 0 11px rgba(0,0,0,.4), 0 0 46px 8px rgba(240,201,138,.45), 0 25px 60px rgba(0,0,0,.55)}
+    .hero-photo-ring{position:absolute;inset:-9px;border-radius:50%;border:1.5px dashed rgba(232,168,85,.55);animation:heroOrbitSpin 34s linear infinite reverse;pointer-events:none;z-index:1}
+    body.dark-theme .hero-photo-ring{border-color:rgba(240,201,138,.5)}
+
+    /* ---------- little heart accents for the bear/cat doodles ---------- */
+    .hero-doodle-accent{position:absolute;font-size:.85rem;opacity:.9;animation:heroOrbitBob 2s ease-in-out infinite}
+    .hero-doodle-bear .hero-doodle-accent{top:-8px;right:-10px}
+    .hero-doodle-cat .hero-doodle-accent{top:-6px;left:-8px;animation-delay:-.6s}
+
+    @media (max-width:900px){
+      .hero-eyebrow{letter-spacing:1px}
+    }
+
+    /* ================================================================
+       HERO ENHANCEMENT PASS 2 — denser starfield with real star shapes,
+       drifting glitter dust, occasional shooting stars, a shimmering
+       sweep across the name, a static sparkle halo around the photo,
+       and a slow stream of rising hearts. Purely additive.
+    ================================================================ */
+
+    /* ---------- four-point sparkle stars (CSS shape, not emoji) ---------- */
+    .hero-star{
+      position:absolute;pointer-events:none;opacity:0;
+      background:
+        radial-gradient(circle at 50% 50%, #fff 0%, rgba(255,255,255,0) 70%);
+      clip-path:polygon(50% 0%,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0% 50%,39% 39%);
+      animation:heroStarPop ease-in-out infinite;
+    }
+    @keyframes heroStarPop{
+      0%,100%{opacity:0;transform:scale(.3) rotate(0deg)}
+      50%{opacity:var(--star-op,.85);transform:scale(1) rotate(45deg)}
+    }
+    body:not(.dark-theme) .hero-star{background:radial-gradient(circle at 50% 50%, #E8A855 0%, rgba(232,168,85,0) 70%)}
+    body.dark-theme .hero-star{background:radial-gradient(circle at 50% 50%, #FFE9B8 0%, rgba(255,233,184,0) 70%)}
+
+    /* ---------- soft rising glitter dust ---------- */
+    .hero-glitter{
+      position:absolute;bottom:-10px;border-radius:50%;pointer-events:none;
+      background:radial-gradient(circle, #FFEFC2 0%, rgba(255,239,194,0) 75%);
+      animation:heroGlitterRise linear infinite;
+      opacity:0;
+    }
+    @keyframes heroGlitterRise{
+      0%{transform:translateY(0) translateX(0);opacity:0}
+      10%{opacity:.85}
+      50%{transform:translateY(-55vh) translateX(var(--gx,10px))}
+      90%{opacity:.5}
+      100%{transform:translateY(-100vh) translateX(calc(var(--gx,10px) * 2));opacity:0}
+    }
+
+    /* ---------- shimmering sweep across the name ---------- */
+    .hero-poster-name{
+      background:linear-gradient(100deg,#C47A3A 0%,#8B4513 14%,#D4956A 26%,#FFF6DF 36%,#D4956A 46%,#8B4513 60%,#C47A3A 76%,#D4956A 90%,#8B4513 100%);
+      background-size:280% 100%;
+      -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+      animation:heroNameShine 5.5s linear infinite;
+    }
+    @keyframes heroNameShine{0%{background-position:0% 50%}100%{background-position:280% 50%}}
+    body.dark-theme .hero-poster-name{
+      background:linear-gradient(100deg,#F0C98A 0%,#C9922E 14%,#F0C98A 26%,#FFFBEF 36%,#F0C98A 46%,#C9922E 60%,#F0C98A 76%,#E8C48A 90%,#C9922E 100%);
+      background-size:280% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    }
+
+    /* ---------- static sparkle halo ring around the photo ---------- */
+    .hero-sparkle-halo{position:absolute;inset:-34px;pointer-events:none;z-index:1}
+    .hero-sparkle-halo span{
+      position:absolute;top:50%;left:50%;font-size:1rem;
+      transform:translate(-50%,-50%) rotate(var(--sh-a,0deg)) translateY(calc(-1 * var(--sh-r,150px))) rotate(calc(-1 * var(--sh-a,0deg)));
+      animation:heroSparkleHaloTwinkle ease-in-out infinite;
+      filter:drop-shadow(0 0 4px rgba(232,168,85,.6));
+    }
+    @keyframes heroSparkleHaloTwinkle{0%,100%{opacity:.35;transform:translate(-50%,-50%) rotate(var(--sh-a,0deg)) translateY(calc(-1 * var(--sh-r,150px))) rotate(calc(-1 * var(--sh-a,0deg))) scale(.8)}50%{opacity:1;transform:translate(-50%,-50%) rotate(var(--sh-a,0deg)) translateY(calc(-1 * var(--sh-r,150px))) rotate(calc(-1 * var(--sh-a,0deg))) scale(1.25)}}
+
+    /* ---------- gentle stream of rising hearts through the hero ---------- */
+    .hero-rising-heart{
+      position:absolute;bottom:-10px;pointer-events:none;opacity:0;
+      animation:heroHeartRise linear forwards;
+      filter:drop-shadow(0 2px 4px rgba(139,69,19,.25));
+    }
+    @keyframes heroHeartRise{
+      0%{transform:translateY(0) translateX(0) rotate(0deg) scale(.7);opacity:0}
+      12%{opacity:.9}
+      80%{opacity:.75}
+      100%{transform:translateY(-108vh) translateX(var(--hr-x,20px)) rotate(var(--hr-rot,20deg)) scale(1.05);opacity:0}
+    }
+
+    /* ---------- little sparkles flanking the eyebrow and wish text ---------- */
+    .hero-eyebrow::before,.hero-eyebrow::after{content:'';}
+    .hero-poster-wish{padding:0 4px}
+
+    @media (max-width:600px){
+      .hero-sparkle-halo{inset:-20px}
+      .hero-sparkle-halo span{font-size:.8rem}
+    }
   </style>
 
   <section id="owl-letters">
@@ -2894,6 +3114,105 @@
       c.style.cssText = `left:${Math.random() * 100}%;background:${cColors[Math.floor(Math.random() * cColors.length)]};width:${6 + Math.random() * 6}px;height:${6 + Math.random() * 6}px;border-radius:${Math.random() > 0.5 ? '50%' : '2px'};animation-duration:${4 + Math.random() * 6}s;animation-delay:${Math.random() * 8}s`;
       heroBg.appendChild(c);
     }
+
+    // ===== HERO TWINKLE STAR FIELD (denser, layered) =====
+    (function () {
+      const twinkleLayer = document.getElementById('heroTwinkleLayer');
+      if (!twinkleLayer) return;
+
+      // layer 1: fine twinkle dots — lots of them, small and quiet
+      const dotCount = 110;
+      for (let i = 0; i < dotCount; i++) {
+        const t = document.createElement('span');
+        t.className = 'hero-twinkle';
+        const size = 1.2 + Math.random() * 2.6;
+        t.style.left = Math.random() * 100 + '%';
+        t.style.top = Math.random() * 100 + '%';
+        t.style.width = size + 'px';
+        t.style.height = size + 'px';
+        t.style.setProperty('--tw-op', (0.35 + Math.random() * 0.55).toFixed(2));
+        t.style.animationDuration = (2 + Math.random() * 3.5) + 's';
+        t.style.animationDelay = (-Math.random() * 5) + 's';
+        twinkleLayer.appendChild(t);
+      }
+
+      // layer 2: bigger four-point sparkle stars scattered more sparsely
+      const starCount = 22;
+      for (let i = 0; i < starCount; i++) {
+        const s = document.createElement('span');
+        s.className = 'hero-star';
+        const size = 8 + Math.random() * 14;
+        s.style.left = Math.random() * 100 + '%';
+        s.style.top = Math.random() * 100 + '%';
+        s.style.width = size + 'px';
+        s.style.height = size + 'px';
+        s.style.setProperty('--star-op', (0.55 + Math.random() * 0.4).toFixed(2));
+        s.style.animationDuration = (2.6 + Math.random() * 3) + 's';
+        s.style.animationDelay = (-Math.random() * 6) + 's';
+        twinkleLayer.appendChild(s);
+      }
+
+      // layer 3: soft glitter dust drifting upward from the bottom half
+      const glitterCount = 34;
+      for (let i = 0; i < glitterCount; i++) {
+        const g = document.createElement('span');
+        g.className = 'hero-glitter';
+        const size = 3 + Math.random() * 4;
+        g.style.left = Math.random() * 100 + '%';
+        g.style.width = size + 'px';
+        g.style.height = size + 'px';
+        g.style.setProperty('--gx', ((Math.random() - 0.5) * 60).toFixed(0) + 'px');
+        g.style.animationDuration = (6 + Math.random() * 7) + 's';
+        g.style.animationDelay = (-Math.random() * 12) + 's';
+        twinkleLayer.appendChild(g);
+      }
+
+      // a gentle, continuous stream of rising hearts through the whole hero
+      const heartEmojis = ['💛','💕','🌸','✨','💗'];
+      function spawnRisingHeart() {
+        const h = document.createElement('span');
+        h.className = 'hero-rising-heart';
+        h.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+        h.style.left = Math.random() * 100 + '%';
+        h.style.fontSize = (0.8 + Math.random() * 0.9) + 'rem';
+        h.style.setProperty('--hr-x', ((Math.random() - 0.5) * 120).toFixed(0) + 'px');
+        h.style.setProperty('--hr-rot', ((Math.random() - 0.5) * 60).toFixed(0) + 'deg');
+        h.style.animationDuration = (9 + Math.random() * 8) + 's';
+        twinkleLayer.appendChild(h);
+        setTimeout(() => h.remove(), 18000);
+      }
+      setInterval(spawnRisingHeart, 1500);
+      for (let i = 0; i < 4; i++) setTimeout(spawnRisingHeart, i * 500);
+    })();
+
+    // ===== STATIC SPARKLE HALO AROUND THE HERO PHOTO =====
+    (function () {
+      const halo = document.getElementById('heroSparkleHalo');
+      const stage = document.querySelector('.hero-photo-stage');
+      if (!halo || !stage) return;
+      const sparkleGlyphs = ['✦', '✧', '⋆', '✨'];
+      const count = 12;
+
+      function layout() {
+        const baseR = stage.getBoundingClientRect().width / 2 + 22;
+        halo.querySelectorAll('span').forEach((s, i) => {
+          const jitter = (i % 3) * 5;
+          s.style.setProperty('--sh-r', (baseR + jitter) + 'px');
+        });
+      }
+
+      for (let i = 0; i < count; i++) {
+        const s = document.createElement('span');
+        s.textContent = sparkleGlyphs[i % sparkleGlyphs.length];
+        const angle = (360 / count) * i + (Math.random() * 8 - 4);
+        s.style.setProperty('--sh-a', angle + 'deg');
+        s.style.animationDuration = (2 + Math.random() * 2) + 's';
+        s.style.animationDelay = (-Math.random() * 3) + 's';
+        halo.appendChild(s);
+      }
+      layout();
+      window.addEventListener('resize', layout);
+    })();
 
     // ===== SPARKLE ON CLICK =====
     document.addEventListener('click', (e) => {
@@ -4446,7 +4765,33 @@
       buildLetters();
     })();
   </script>
+<script>
+    // ===== HERO SIDE FLOWER VINES =====
+    (function () {
+      const leftCol = document.getElementById('heroVineLeft');
+      const rightCol = document.getElementById('heroVineRight');
+      if (!leftCol || !rightCol) return;
 
+      const vineEmojis = ['🌸', '🌿', '🌼', '🍃', '🌺', '🌷', '🍂', '🌿'];
+      const positionsPct = [4, 16, 28, 40, 52, 64, 76, 88];
+
+      function buildVine(col, reverse) {
+        const list = reverse ? [...vineEmojis].reverse() : vineEmojis;
+        list.forEach((emo, i) => {
+          const span = document.createElement('span');
+          span.className = 'hero-vine-item';
+          span.textContent = emo;
+          span.style.top = positionsPct[i] + '%';
+          span.style.animation = `hero-doodle-bob ${3 + (i % 3) * 0.6}s ease-in-out infinite`;
+          span.style.animationDelay = (-i * 0.4) + 's';
+          col.appendChild(span);
+        });
+      }
+
+      buildVine(leftCol, false);
+      buildVine(rightCol, true);
+    })();
+  </script>
 </body>
 
 </html>
