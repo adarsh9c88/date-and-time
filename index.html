@@ -882,13 +882,17 @@
     .hero-photo-frame img{width:100%;height:100%;object-fit:cover;display:block}
 
     .hero-age-badge{
-      position:absolute;bottom:2%;right:0%;z-index:3;
-      width:64px;height:64px;border-radius:50%;
-      background:linear-gradient(135deg,#D4956A,#8B4513);
-      display:flex;flex-direction:column;align-items:center;justify-content:center;
-      box-shadow:0 0 0 4px #FDF6EE, 0 8px 20px rgba(139,69,19,.45);
-      animation:heroBadgePop 2.6s ease-in-out infinite;
-    }
+  position:absolute;bottom:2%;right:0%;z-index:3;
+  width:64px;height:64px;border-radius:50%;
+  background:linear-gradient(135deg,#D4956A,#8B4513);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  box-shadow:0 0 0 4px #FDF6EE, 0 8px 20px rgba(139,69,19,.45), 0 0 0 0 rgba(255,209,102,.6);
+  animation:heroBadgePop 2.6s ease-in-out infinite, heroBadgeGlow 1.8s ease-in-out infinite;
+}
+@keyframes heroBadgeGlow{
+  0%,100%{box-shadow:0 0 0 4px #FDF6EE, 0 8px 20px rgba(139,69,19,.45), 0 0 0 0 rgba(255,209,102,.55)}
+  50%{box-shadow:0 0 0 4px #FDF6EE, 0 8px 26px rgba(139,69,19,.5), 0 0 0 10px rgba(255,209,102,0)}
+}
     @keyframes heroBadgePop{0%,100%{transform:scale(1) rotate(-4deg)}50%{transform:scale(1.08) rotate(4deg)}}
     .hero-age-num{font-family:'Pacifico',cursive;font-size:1.3rem;color:#fff;line-height:1}
     .hero-age-cake{font-size:.85rem;margin-top:-2px}
@@ -1035,7 +1039,7 @@
         <span class="hero-note-heart tl">♡</span><span class="hero-note-heart tr">♡</span><span class="hero-note-heart bl">♡</span><span class="hero-note-heart br">♡</span>
         More happiness,<br>more dreams,<br>more you  ☘︎
       </div>
-      <div class="hero-note hero-note-ll" style="--rot:6deg; bottom: 25%; left: 12.8%;">
+      <div class="hero-note hero-note-ll" style="--rot:6deg; bottom: 25%; left: 12.7%;">
         <span class="hero-note-heart tl">♡</span><span class="hero-note-heart tr">♡</span><span class="hero-note-heart bl">♡</span><span class="hero-note-heart br">♡</span>
         Keep shining,<br>always my<br>Dear  ♥
       </div>
@@ -1617,7 +1621,7 @@
   <style>
     /* ============ RETRO PAYPHONE WIDGET ============ */
     #payphone{background:linear-gradient(135deg,#FDF6EE 0%,#F5E6D3 100%)}
-    .phw-wrap{max-width:500px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:22px}
+    .phw-wrap{max-width:400px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:22px}
 
     .phw-box{
       width:100%;background:linear-gradient(160deg,#F5E6D3 0%,#EAD3B2 100%);
@@ -1654,7 +1658,7 @@
 
     /* --- dial area --- */
     .phw-dial-area{
-      position:relative;width:clamp(240px,calc(100vw - 90px),400px);aspect-ratio:1/1;margin:0 auto;
+  position:relative;width:clamp(192px,calc((100vw - 90px)*0.8),320px);aspect-ratio:1/1;margin:0 auto;
       border-radius:50%;
       background:radial-gradient(circle at 35% 30%,#FBF3E6,#E4CBA5 60%,#C9A876 100%);
       border:6px solid var(--mocha);
@@ -4526,7 +4530,34 @@ body.dark-theme .hero-name-swing{ filter: drop-shadow(0 6px 10px rgba(0,0,0,.5))
       function openNoModal() { noModal.classList.add('show'); noVideo.currentTime = 0; noVideo.play().catch(() => {}); document.body.style.overflow = 'hidden'; }
       function closeNoModal() { noModal.classList.remove('show'); noVideo.pause(); document.body.style.overflow = ''; }
 
-      yesBtn.addEventListener('click', openModal);
+            let yesClicks = 0;
+      const yesRequired = 5;
+      yesBtn.style.transition = 'left .3s ease, top .3s ease';
+
+      function dodgeYesButton() {
+        const w = yesBtn.offsetWidth, h = yesBtn.offsetHeight;
+        const maxX = Math.max(20, window.innerWidth - w - 20);
+        const maxY = Math.max(20, window.innerHeight - h - 20);
+        const x = 20 + Math.random() * (maxX - 20);
+        const y = 20 + Math.random() * (maxY - 20);
+        yesBtn.style.position = 'fixed';
+        yesBtn.style.left = x + 'px';
+        yesBtn.style.top = y + 'px';
+        yesBtn.style.zIndex = '9999';
+      }
+
+      yesBtn.addEventListener('click', () => {
+        yesClicks++;
+        if (yesClicks < yesRequired) {
+          dodgeYesButton();
+        } else {
+          yesBtn.style.position = '';
+          yesBtn.style.left = '';
+          yesBtn.style.top = '';
+          yesBtn.style.zIndex = '';
+          openModal();
+        }
+      });
       noBtn.addEventListener('click', openNoModal);
       closeBtn.addEventListener('click', closeModal);
       noCloseBtn.addEventListener('click', closeNoModal);
