@@ -4531,33 +4531,35 @@ body.dark-theme .hero-name-swing{ filter: drop-shadow(0 6px 10px rgba(0,0,0,.5))
       function closeNoModal() { noModal.classList.remove('show'); noVideo.pause(); document.body.style.overflow = ''; }
 
             let yesClicks = 0;
-      const yesRequired = 5;
-      yesBtn.style.transition = 'left .3s ease, top .3s ease';
+    const yesRequired = 5;
+    yesBtn.style.transition = 'transform 0.3s ease';
 
-      function dodgeYesButton() {
-        const w = yesBtn.offsetWidth, h = yesBtn.offsetHeight;
-        const maxX = Math.max(20, window.innerWidth - w - 20);
-        const maxY = Math.max(20, window.innerHeight - h - 20);
-        const x = 20 + Math.random() * (maxX - 20);
-        const y = 20 + Math.random() * (maxY - 20);
-        yesBtn.style.position = 'fixed';
-        yesBtn.style.left = x + 'px';
-        yesBtn.style.top = y + 'px';
-        yesBtn.style.zIndex = '9999';
+    function dodgeYesButton() {
+      // Calculate how far the button can move without leaving the viewport
+      const rect = yesBtn.getBoundingClientRect();
+      const pad = 24;
+
+      const minDeltaX = -(rect.left - pad);
+      const maxDeltaX = window.innerWidth - rect.right - pad;
+      const minDeltaY = -(rect.top - pad);
+      const maxDeltaY = window.innerHeight - rect.bottom - pad;
+
+      // Random offset within the safe visible boundaries
+      const randX = minDeltaX + Math.random() * (maxDeltaX - minDeltaX);
+      const randY = minDeltaY + Math.random() * (maxDeltaY - minDeltaY);
+
+      yesBtn.style.transform = `translate(${randX}px, ${randY}px)`;
+    }
+
+    yesBtn.addEventListener('click', () => {
+      yesClicks++;
+      if (yesClicks < yesRequired) {
+        dodgeYesButton();
+      } else {
+        yesBtn.style.transform = '';
+        openModal();
       }
-
-      yesBtn.addEventListener('click', () => {
-        yesClicks++;
-        if (yesClicks < yesRequired) {
-          dodgeYesButton();
-        } else {
-          yesBtn.style.position = '';
-          yesBtn.style.left = '';
-          yesBtn.style.top = '';
-          yesBtn.style.zIndex = '';
-          openModal();
-        }
-      });
+    });
       noBtn.addEventListener('click', openNoModal);
       closeBtn.addEventListener('click', closeModal);
       noCloseBtn.addEventListener('click', closeNoModal);
