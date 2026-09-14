@@ -4532,21 +4532,20 @@ body.dark-theme .hero-name-swing{ filter: drop-shadow(0 6px 10px rgba(0,0,0,.5))
 
             let yesClicks = 0;
     const yesRequired = 5;
-    yesBtn.style.transition = 'transform 0.3s ease';
+    // Smoother, gentler animation timing
+    yesBtn.style.transition = 'transform 0.45s cubic-bezier(0.25, 1, 0.5, 1)';
 
     function dodgeYesButton() {
-      // Calculate how far the button can move without leaving the viewport
-      const rect = yesBtn.getBoundingClientRect();
-      const pad = 24;
+      // Small movement radius (max 65px horizontally, 45px vertically)
+      const maxDeltaX = 65;
+      const maxDeltaY = 45;
 
-      const minDeltaX = -(rect.left - pad);
-      const maxDeltaX = window.innerWidth - rect.right - pad;
-      const minDeltaY = -(rect.top - pad);
-      const maxDeltaY = window.innerHeight - rect.bottom - pad;
+      // Pick a random offset within the limited range, ensuring it actually moves at least 25px
+      const dirX = Math.random() < 0.5 ? -1 : 1;
+      const dirY = Math.random() < 0.5 ? -1 : 1;
 
-      // Random offset within the safe visible boundaries
-      const randX = minDeltaX + Math.random() * (maxDeltaX - minDeltaX);
-      const randY = minDeltaY + Math.random() * (maxDeltaY - minDeltaY);
+      const randX = dirX * (25 + Math.random() * (maxDeltaX - 25));
+      const randY = dirY * (20 + Math.random() * (maxDeltaY - 20));
 
       yesBtn.style.transform = `translate(${randX}px, ${randY}px)`;
     }
