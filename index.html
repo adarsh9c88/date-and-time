@@ -1072,7 +1072,7 @@
       </div>
 
       <h1 class="hero-poster-title reveal">Happy 20th Birthday</h1>
-      <div class="hero-poster-name reveal">Munni </div>
+      <div class="hero-poster-name reveal">Munni <span class="hero-name-swing-wrap"><span class="hero-name-swing">🎀</span></span></div>
       <span class="hero-poster-underline reveal"></span>
       <p class="hero-poster-wish reveal">
         Twenty looks so beautiful on you. Here's to a year as bright, kind, and wonderful as you are — happy birthday, Munni. 🌸
@@ -2888,6 +2888,27 @@
       background:linear-gradient(100deg,#F0C98A 0%,#C9922E 14%,#F0C98A 26%,#FFFBEF 36%,#F0C98A 46%,#C9922E 60%,#F0C98A 76%,#E8C48A 90%,#C9922E 100%);
       background-size:280% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
     }
+
+    /* ===== SWINGING EMOJI NEXT TO NAME ===== */
+.hero-name-swing-wrap{
+  display:inline-block;
+  transform-origin: top center;
+  animation: heroNameSwing 2.3s ease-in-out infinite;
+  vertical-align: -0.08em;
+  margin-left: 0.12em;
+}
+.hero-name-swing{
+  display:inline-block;
+  font-size: 0.85em;              /* a bit bigger relative to the name text */
+  -webkit-text-fill-color: initial; /* undo the gradient-text clip from parent */
+  background: none;
+  filter: drop-shadow(0 6px 10px rgba(139,69,19,.3));
+}
+@keyframes heroNameSwing{
+  0%,100%{ transform: rotate(-18deg); }
+  50%{ transform: rotate(18deg); }
+}
+body.dark-theme .hero-name-swing{ filter: drop-shadow(0 6px 10px rgba(0,0,0,.5)); }
 
     /* ---------- static sparkle halo ring around the photo ---------- */
     .hero-sparkle-halo{position:absolute;inset:-34px;pointer-events:none;z-index:1}
