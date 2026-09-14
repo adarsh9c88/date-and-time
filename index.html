@@ -4537,15 +4537,15 @@ body.dark-theme .hero-name-swing{ filter: drop-shadow(0 6px 10px rgba(0,0,0,.5))
 
     function dodgeYesButton() {
       // Small movement radius (max 65px horizontally, 45px vertically)
-      const maxDeltaX = 65;
-      const maxDeltaY = 45;
+      const maxDeltaX = 100;
+      const maxDeltaY = 85;
 
       // Pick a random offset within the limited range, ensuring it actually moves at least 25px
       const dirX = Math.random() < 0.5 ? -1 : 1;
       const dirY = Math.random() < 0.5 ? -1 : 1;
 
-      const randX = dirX * (25 + Math.random() * (maxDeltaX - 25));
-      const randY = dirY * (20 + Math.random() * (maxDeltaY - 20));
+      const randX = dirX * (45 + Math.random() * (maxDeltaX - 45));
+      const randY = dirY * (40 + Math.random() * (maxDeltaY - 40));
 
       yesBtn.style.transform = `translate(${randX}px, ${randY}px)`;
     }
