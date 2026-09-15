@@ -1168,10 +1168,19 @@ body.dark-theme .hero-age-badge {
                Other photos already used on the page: images/3.png, images/7.png -->
           <img src="images/1.png" alt="Munni">
         </div>
-        <div class="hero-age-badge">
-          <span class="hero-age-num">20</span>
-          <span class="hero-age-cake">🎂</span>
-        </div>
+        <div class="hero-age-badge" id="heroAgeBadge">
+  <svg class="badge-ring-text" viewBox="0 0 120 120" aria-hidden="true">
+    <defs>
+      <path id="badgeRingPath" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"></path>
+    </defs>
+    <text><textPath href="#badgeRingPath" startOffset="0">HAPPY BIRTHDAY MUNNI ✦ TWENTY ✦ </textPath></text>
+  </svg>
+  <span class="badge-pulse"></span>
+  <span class="badge-pulse p2"></span>
+  <span class="hero-age-num" id="heroAgeNum">20</span>
+  <span class="hero-age-cake">🎂</span>
+  <span class="badge-shine"></span>
+</div>
       </div>
 
       <h1 class="hero-poster-title reveal">Happy 20th Birthday</h1>
@@ -4985,6 +4994,104 @@ body.dark-theme .hero-name-swing{ filter: drop-shadow(0 6px 10px rgba(0,0,0,.5))
         setTimeout(() => p.remove(), 750);
       }
     });
+  })();
+</script>
+<style>
+  /* ===== HERO AGE BADGE — circular text ring, pulse rings, shine ===== */
+  .hero-age-badge{ overflow:visible; }
+
+  /* rotating circular caption */
+  .badge-ring-text{
+    position:absolute; top:50%; left:50%;
+    width:128px; height:128px;
+    transform:translate(-50%,-50%);
+    pointer-events:none; overflow:visible; z-index:-2;
+    animation:badgeRingSpin 16s linear infinite;
+  }
+  .badge-ring-text text{
+    font-family:'Quicksand',sans-serif; font-size:11px; font-weight:800;
+    letter-spacing:1.4px; fill:#8B4513;
+    filter:drop-shadow(0 1px 2px rgba(255,255,255,.7));
+  }
+  @keyframes badgeRingSpin{ to{ transform:translate(-50%,-50%) rotate(360deg); } }
+  .hero-age-badge:hover .badge-ring-text{ animation-duration:5s; }
+
+  /* expanding halo rings */
+  .badge-pulse{
+    position:absolute; inset:0; border-radius:50%;
+    border:2px solid rgba(255,158,187,.75);
+    pointer-events:none; z-index:-1;
+    animation:badgePulseRing 2.8s ease-out infinite;
+  }
+  .badge-pulse.p2{ animation-delay:1.4s; border-color:rgba(232,168,85,.7); }
+  @keyframes badgePulseRing{
+    0%{ transform:scale(1); opacity:.8 }
+    100%{ transform:scale(2); opacity:0 }
+  }
+
+  /* glass shine sweep across the face */
+  .badge-shine{
+    position:absolute; inset:0; border-radius:50%;
+    overflow:hidden; pointer-events:none; z-index:3;
+  }
+  .badge-shine::after{
+    content:''; position:absolute; top:-60%; left:-130%;
+    width:55%; height:220%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.9),transparent);
+    transform:rotate(18deg);
+    animation:badgeShineSweep 3.6s ease-in-out infinite;
+  }
+  @keyframes badgeShineSweep{
+    0%{ left:-130% } 55%,100%{ left:170% }
+  }
+
+  /* dark mode */
+  body.dark-theme .badge-ring-text text{
+    fill:#F0C98A; filter:drop-shadow(0 0 6px rgba(240,201,138,.5));
+  }
+  body.dark-theme .badge-pulse{ border-color:rgba(240,201,138,.7) }
+  body.dark-theme .badge-pulse.p2{ border-color:rgba(255,158,187,.55) }
+
+  @media (max-width:600px){
+    .badge-ring-text{ width:110px; height:110px }
+    .badge-ring-text text{ font-size:10px; letter-spacing:1px }
+  }
+</style>
+
+<script>
+  /* count up 0 → 20 the first time the badge is visible */
+  (function () {
+    var num = document.getElementById('heroAgeNum');
+    if (!num) return;
+    var target = parseInt(num.textContent, 10) || 20;
+    var done = false;
+
+    function run() {
+      if (done) return;
+      done = true;
+      var current = 0;
+      var t0 = null;
+      function step(ts) {
+        if (!t0) t0 = ts;
+        var p = Math.min(1, (ts - t0) / 1400);
+        var eased = 1 - Math.pow(1 - p, 3);
+        current = Math.round(target * eased);
+        num.textContent = current;
+        if (p < 1) requestAnimationFrame(step);
+        else num.textContent = target;
+      }
+      num.textContent = '0';
+      requestAnimationFrame(step);
+    }
+
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { run(); io.disconnect(); } });
+      }, { threshold: 0.4 });
+      io.observe(num);
+    } else {
+      setTimeout(run, 1600);
+    }
   })();
 </script>
   
