@@ -4987,6 +4987,105 @@ body.dark-theme .hero-name-swing{ filter: drop-shadow(0 6px 10px rgba(0,0,0,.5))
     });
   })();
 </script>
+
+  <!-- ===== ENTRY SONG — plays on load, stops at section 2 ===== -->
+<audio id="entrySong" src="music/entry.mp3" preload="auto" loop></audio>
+
+<script>
+(function () {
+  var SONG_PATH_NOTE = 'music/Vaaroon.mp3';   // change the src above if your file lives elsewhere
+  var STOP_AT = '#wishes';                  // the 2nd section — stop when this comes into view
+  var VOLUME = 0.55;                        // 0 to 1
+  var FADE_IN_MS = 1200;
+  var FADE_OUT_MS = 1400;
+
+  var song = document.getElementById('entrySong');
+  var stopSection = document.querySelector(STOP_AT);
+  if (!song) return;
+
+  var stopped = false;
+  var started = false;
+  var fadeTimer = null;
+
+  function fadeTo(targetVol, duration, onDone) {
+    clearInterval(fadeTimer);
+    var startVol = song.volume;
+    var t0 = performance.now();
+    fadeTimer = setInterval(function () {
+      var p = Math.min(1, (performance.now() - t0) / duration);
+      song.volume = Math.max(0, Math.min(1, startVol + (targetVol - startVol) * p));
+      if (p >= 1) {
+        clearInterval(fadeTimer);
+        if (onDone) onDone();
+      }
+    }, 40);
+  }
+
+  function startSong() {
+    if (started || stopped) return;
+    started = true;
+    song.volume = 0;
+    var p = song.play();
+    if (p && p.catch) {
+      p.then(function () {
+        fadeTo(VOLUME, FADE_IN_MS);
+      }).catch(function () {
+        // autoplay blocked — wait for the first interaction
+        started = false;
+        armInteractionFallback();
+      });
+    } else {
+      fadeTo(VOLUME, FADE_IN_MS);
+    }
+  }
+
+  function armInteractionFallback() {
+    var events = ['click', 'touchstart', 'keydown', 'pointerdown'];
+    function once() {
+      events.forEach(function (ev) { document.removeEventListener(ev, once); });
+      startSong();
+    }
+    events.forEach(function (ev) { document.addEventListener(ev, once, { once: true }); });
+  }
+
+  function stopSong() {
+    if (stopped) return;
+    stopped = true;
+    fadeTo(0, FADE_OUT_MS, function () {
+      song.pause();
+      song.currentTime = 0;
+    });
+  }
+
+  // --- start: right after the loader finishes ---
+  window.addEventListener('load', function () { setTimeout(startSong, 1400); });
+  setTimeout(startSong, 4200); // safety net if 'load' already fired
+
+  // --- stop: when the Letter section scrolls into view ---
+  if (stopSection && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { stopSong(); io.disconnect(); }
+      });
+    }, { threshold: 0.15 });
+    io.observe(stopSection);
+  } else if (stopSection) {
+    window.addEventListener('scroll', function onScroll() {
+      var top = stopSection.getBoundingClientRect().top;
+      if (top < window.innerHeight * 0.85) {
+        stopSong();
+        window.removeEventListener('scroll', onScroll);
+      }
+    }, { passive: true });
+  }
+
+  // don't let it fight the letter/voice audio if those start first
+  ['letterAudio', 'audioPlayer', 'phwAudio'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('play', stopSong);
+  });
+})();
+</script>
   
 </body>
 
