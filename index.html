@@ -5086,7 +5086,201 @@ body.dark-theme .hero-name-swing{ filter: drop-shadow(0 6px 10px rgba(0,0,0,.5))
   });
 })();
 </script>
-  
+<script>
+// ===== SCRAPBOOK WALL — "Our Moments" =====
+(function () {
+  const root = document.getElementById('sbRoot');
+  if (!root) return;
+
+  // ---------- EDIT THIS: chapters, photos, captions ----------
+  const SB_PATH = 'images/moments/';   // folder with your photos
+  const SB_EXT  = '.jpg';              // change to .png if needed
+  const p = (n, cap) => ({ src: SB_PATH + n + SB_EXT, cap });
+
+  const SB_CHAPTERS = [
+    { title: 'Where it all began 🌱', note: 'the day you said yes to my request',
+      photos: [ p(1,'the very first one'), p(2,'random but special'), p(3,'unexpected friend'), p(4,'that silly day') ] },
+    { title: 'Little everyday things ☕', note: 'nothing fancy, still my favourites',
+      photos: [ p(5,'chai break'), p(6,'study mode on'), p(7,'smiles for no reason'), p(8,'always you') ] },
+    { title: 'Future Dr. Munni 🩺', note: 'the white coat is coming',
+      photos: [ p(9,'proud of you'), p(10,'keep going') ] }
+    // add more chapters / photos — 50+ works fine
+  ];
+  // -----------------------------------------------------------
+
+  const TAPES = ['t-pink','t-yellow','t-mint','t-lav'];
+  const STICKERS = ['🌸','⭐','💛','🎀','🦋','🍯'];
+  const DOODLES = ['🌸','✨','🍂','🐾','💌','🌰'];
+  const rand = (a,b) => a + Math.random()*(b-a);
+  const pick = arr => arr[Math.floor(Math.random()*arr.length)];
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const shuffle = arr => { const a = arr.slice(); for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+
+  let chapters = SB_CHAPTERS.map(c => ({ ...c, photos: c.photos.slice() }));
+  let observer = null;
+  let flat = [];          // flat list of {src, cap, chapter} for the lightbox
+  let lbIndex = 0;
+
+  function buildPolaroid(photo, chapterTitle, idx) {
+    const el = document.createElement('button');
+    el.type = 'button';
+    el.className = 'sb-polaroid';
+    el.setAttribute('aria-label', 'Open photo: ' + photo.cap);
+    el.style.setProperty('--r', rand(-6, 6).toFixed(1) + 'deg');
+    el.style.setProperty('--y', rand(-8, 10).toFixed(0) + 'px');
+
+    const useTape = Math.random() > 0.35;
+    let deco = '';
+    if (useTape) {
+      deco = `<span class="sb-tape ${pick(TAPES)}" style="--tr:${rand(-8,8).toFixed(0)}deg"></span>`;
+    } else {
+      deco = `<span class="sb-pin ${Math.random() > 0.5 ? 'p-gold' : ''}"></span>`;
+    }
+    const sticker = Math.random() > 0.78 ? `<span class="sb-sticker">${pick(STICKERS)}</span>` : '';
+
+    el.innerHTML = `${deco}
+      <div class="sb-photo"><img src="${esc(photo.src)}" alt="${esc(photo.cap)}" loading="lazy"></div>
+      <div class="sb-cap">${esc(photo.cap)}</div>${sticker}`;
+
+    el.addEventListener('click', () => openLightbox(idx));
+    // once the drop animation ends, switch to the "settled" state so hover works
+    el.addEventListener('animationend', () => el.classList.add('settled'));
+    return el;
+  }
+
+  function render() {
+    if (observer) observer.disconnect();
+    root.innerHTML = '';
+    flat = [];
+
+    // ----- toolbar -----
+    const total = chapters.reduce((n, c) => n + c.photos.length, 0);
+    const bar = document.createElement('div');
+    bar.className = 'sb-toolbar';
+    const shuf = document.createElement('button');
+    shuf.type = 'button';
+    shuf.className = 'sb-shuffle';
+    shuf.textContent = '🔀 Shuffle the board';
+    shuf.addEventListener('click', () => {
+      chapters = chapters.map(c => ({ ...c, photos: shuffle(c.photos) }));
+      render();
+    });
+    bar.appendChild(shuf);
+    chapters.forEach((c, i) => {
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'sb-chip';
+      chip.textContent = c.title;
+      chip.addEventListener('click', () => {
+        const t = document.getElementById('sb-chapter-' + i);
+        if (t) window.scrollTo({ top: t.getBoundingClientRect().top + window.pageYOffset - 80, behavior: 'smooth' });
+      });
+      bar.appendChild(chip);
+    });
+    const count = document.createElement('div');
+    count.className = 'sb-count';
+    count.textContent = total + ' memories pinned 📌';
+    bar.appendChild(count);
+    root.appendChild(bar);
+
+    // ----- chapters -----
+    observer = new IntersectionObserver(entries => {
+      let n = 0;
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        observer.unobserve(el);
+        el.style.setProperty('--d', (n * 0.14).toFixed(2) + 's');   // photos drop one by one
+        el.classList.add('in');
+        n++;
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    chapters.forEach((c, ci) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'sb-chapter';
+      wrap.id = 'sb-chapter-' + ci;
+      wrap.innerHTML = `<div class="sb-chapter-head"><div class="sb-chapter-label">${esc(c.title)}${c.note ? `<span class="sb-chapter-note">${esc(c.note)}</span>` : ''}</div></div>`;
+
+      const board = document.createElement('div');
+      board.className = 'sb-board';
+      for (let d = 0; d < 4; d++) {
+        const doodle = document.createElement('span');
+        doodle.className = 'sb-doodle';
+        doodle.textContent = pick(DOODLES);
+        doodle.style.cssText = `top:${rand(4,90).toFixed(0)}%;left:${rand(2,94).toFixed(0)}%;animation-delay:${(-d*1.2).toFixed(1)}s`;
+        board.appendChild(doodle);
+      }
+      const grid = document.createElement('div');
+      grid.className = 'sb-grid';
+      c.photos.forEach(ph => {
+        const idx = flat.length;
+        flat.push({ ...ph, chapter: c.title });
+        const el = buildPolaroid(ph, c.title, idx);
+        grid.appendChild(el);
+        observer.observe(el);
+      });
+      board.appendChild(grid);
+      wrap.appendChild(board);
+      root.appendChild(wrap);
+    });
+  }
+
+  // ---------- lightbox ----------
+  const lb = document.getElementById('sbLightbox');
+  const lbImg = document.getElementById('sbLbImg');
+  const lbCap = document.getElementById('sbLbCap');
+  const lbMeta = document.getElementById('sbLbMeta');
+  const lbClose = document.getElementById('sbLbClose');
+  const lbPrev = document.getElementById('sbLbPrev');
+  const lbNext = document.getElementById('sbLbNext');
+
+  function showLb(i) {
+    if (!flat.length) return;
+    lbIndex = (i + flat.length) % flat.length;
+    const it = flat[lbIndex];
+    lbImg.src = it.src;
+    lbImg.alt = it.cap;
+    lbCap.textContent = it.cap;
+    lbMeta.textContent = it.chapter + ' · ' + (lbIndex + 1) + ' / ' + flat.length;
+  }
+  function openLightbox(i) {
+    if (!lb) return;
+    showLb(i);
+    lb.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    if (!lb) return;
+    lb.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  if (lb) {
+    lbClose.addEventListener('click', closeLightbox);
+    lbPrev.addEventListener('click', e => { e.stopPropagation(); showLb(lbIndex - 1); });
+    lbNext.addEventListener('click', e => { e.stopPropagation(); showLb(lbIndex + 1); });
+    lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+    document.addEventListener('keydown', e => {
+      if (!lb.classList.contains('show')) return;
+      if (e.key === 'Escape') closeLightbox();
+      else if (e.key === 'ArrowLeft') showLb(lbIndex - 1);
+      else if (e.key === 'ArrowRight') showLb(lbIndex + 1);
+    });
+    // swipe on touch screens
+    let sx = null;
+    lb.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchend', e => {
+      if (sx === null) return;
+      const dx = e.changedTouches[0].clientX - sx;
+      if (Math.abs(dx) > 50) showLb(lbIndex + (dx < 0 ? 1 : -1));
+      sx = null;
+    }, { passive: true });
+  }
+
+  render();
+})();
+</script> 
 </body>
 
 </html>
