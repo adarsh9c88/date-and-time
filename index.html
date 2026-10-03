@@ -3039,6 +3039,37 @@ body.dark-theme .hero-name-swing{ filter: drop-shadow(0 6px 10px rgba(0,0,0,.5))
       .hero-sparkle-halo{inset:-20px}
       .hero-sparkle-halo span{font-size:.8rem}
     }
+    /* ===== LIGHTNING + SPARKLE ON THE POLAROID BOARD ===== */
+.sb-board{animation:sbGlowL 3.6s ease-in-out infinite}
+@keyframes sbGlowL{
+  0%,100%{box-shadow:inset 0 0 70px rgba(90,50,20,.38),0 0 0 10px #9A6A3C,0 0 0 12px #6B3A2A,0 26px 54px rgba(107,58,42,.38),0 0 18px 4px rgba(255,214,120,.35)}
+  50%{box-shadow:inset 0 0 70px rgba(90,50,20,.38),0 0 0 10px #9A6A3C,0 0 0 12px #6B3A2A,0 26px 54px rgba(107,58,42,.38),0 0 46px 14px rgba(255,214,120,.8)}
+}
+body.dark-theme .sb-board{animation-name:sbGlowD}
+@keyframes sbGlowD{
+  0%,100%{box-shadow:inset 0 0 80px rgba(0,0,0,.65),0 0 0 10px #4A3220,0 0 0 12px #1F140B,0 26px 54px rgba(0,0,0,.65),0 0 18px 4px rgba(240,201,138,.3)}
+  50%{box-shadow:inset 0 0 80px rgba(0,0,0,.65),0 0 0 10px #4A3220,0 0 0 12px #1F140B,0 26px 54px rgba(0,0,0,.65),0 0 52px 16px rgba(240,201,138,.75)}
+}
+
+/* flash that lights up the whole board when lightning strikes */
+.sb-board::before{content:'';position:absolute;inset:0;border-radius:18px;pointer-events:none;z-index:6;opacity:0;
+  background:radial-gradient(ellipse at 50% 20%,rgba(255,248,214,.85),rgba(255,214,120,.25) 50%,transparent 75%)}
+.sb-board.sb-flash::before{animation:sbFlash .7s ease-out}
+@keyframes sbFlash{0%{opacity:0}8%{opacity:.9}16%{opacity:.15}26%{opacity:.75}100%{opacity:0}}
+
+/* the bolt itself */
+.sb-bolt{position:absolute;top:0;width:46px;height:75%;z-index:3;pointer-events:none;opacity:0;
+  filter:drop-shadow(0 0 6px #fff3b0) drop-shadow(0 0 16px #ffb347);animation:sbBolt .7s ease-out forwards}
+@keyframes sbBolt{0%{opacity:0}6%{opacity:1}14%{opacity:.2}22%{opacity:1}100%{opacity:0}}
+
+/* twinkling four-point sparkles */
+.sb-spark{position:absolute;z-index:5;pointer-events:none;opacity:0;
+  background:radial-gradient(circle,#fff 0%,#FFD56B 45%,rgba(255,213,107,0) 72%);
+  clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%);
+  animation:sbTwinkle ease-in-out infinite}
+@keyframes sbTwinkle{0%,100%{opacity:0;transform:scale(.3) rotate(0)}50%{opacity:1;transform:scale(1) rotate(45deg)}}
+
+@media (prefers-reduced-motion:reduce){.sb-board,.sb-spark,.sb-bolt{animation:none}}
   </style>
 
   <section id="owl-letters">
@@ -5140,7 +5171,47 @@ body.dark-theme .hero-name-swing{ filter: drop-shadow(0 6px 10px rgba(0,0,0,.5))
   lb.addEventListener('touchend',e=>{if(sx===null)return;const d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>50)show(li+(d<0?1:-1));sx=null},{passive:true});
   render();
 })();
-</script>  
+</script> 
+  <script>
+(function(){
+  const root=document.getElementById('sbRoot'); if(!root) return;
+  const R=(a,b)=>a+Math.random()*(b-a);
+
+  // sparkles on every board (re-applied automatically after "Shuffle")
+  function decorate(){
+    root.querySelectorAll('.sb-board:not(.sb-fx)').forEach(b=>{
+      b.classList.add('sb-fx');
+      for(let i=0;i<16;i++){
+        const s=document.createElement('span'); s.className='sb-spark';
+        const z=R(10,22);
+        s.style.cssText=`left:${R(2,96)}%;top:${R(3,95)}%;width:${z}px;height:${z}px;animation-duration:${R(2,4.5)}s;animation-delay:${-R(0,4)}s`;
+        b.appendChild(s);
+      }
+    });
+  }
+  new MutationObserver(decorate).observe(root,{childList:true});
+  decorate();
+
+  // a lightning strike on a random board that is on screen, every 3.5 to 7 seconds
+  function strike(){
+    const visible=[...root.querySelectorAll('.sb-board')].filter(b=>{
+      const r=b.getBoundingClientRect(); return r.bottom>0 && r.top<innerHeight;
+    });
+    if(visible.length){
+      const b=visible[Math.floor(Math.random()*visible.length)];
+      const bolt=document.createElementNS('http://www.w3.org/2000/svg','svg');
+      bolt.setAttribute('class','sb-bolt'); bolt.setAttribute('viewBox','0 0 60 200'); bolt.setAttribute('preserveAspectRatio','none');
+      bolt.innerHTML='<polygon points="34,0 14,70 30,72 6,140 26,142 12,200 52,100 34,98 54,50 38,48 50,0" fill="#fff8d6"/>';
+      bolt.style.left=R(8,88)+'%';
+      b.appendChild(bolt);
+      b.classList.add('sb-flash');
+      setTimeout(()=>{bolt.remove(); b.classList.remove('sb-flash');},750);
+    }
+    setTimeout(strike,R(3500,7000));
+  }
+  setTimeout(strike,2500);
+})();
+</script>
 </body>
 
 </html>
