@@ -1627,7 +1627,17 @@ body.dark-theme .hero-age-badge {
   </section>
 
 
-
+<section id="art">
+  <h2 class="section-title reveal">Our Moments 📸</h2>
+  <p class="section-sub reveal">Pinned up one memory at a time. Tap any photo to open it ✨</p>
+  <div class="sb-wrap" id="sbRoot"></div>
+</section>
+<div id="sbLightbox" role="dialog" aria-modal="true">
+  <button class="sb-lb-btn sb-lb-close" id="sbLbClose" type="button" aria-label="Close">✕</button>
+  <button class="sb-lb-btn sb-lb-prev" id="sbLbPrev" type="button" aria-label="Previous">‹</button>
+  <button class="sb-lb-btn sb-lb-next" id="sbLbNext" type="button" aria-label="Next">›</button>
+  <div class="sb-lb-frame"><img class="sb-lb-img" id="sbLbImg" alt=""><div class="sb-lb-cap" id="sbLbCap"></div><div class="sb-lb-meta" id="sbLbMeta"></div></div>
+</div>
 
   <section id="wishjar">
     <h2 class="section-title reveal">Make a Wish, Fill the Jar 🫙</h2>
@@ -5130,7 +5140,7 @@ body.dark-theme .hero-name-swing{ filter: drop-shadow(0 6px 10px rgba(0,0,0,.5))
   lb.addEventListener('touchend',e=>{if(sx===null)return;const d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>50)show(li+(d<0?1:-1));sx=null},{passive:true});
   render();
 })();
-</script> 
+</script>  
 </body>
 
 </html>
