@@ -5103,7 +5103,7 @@ body.dark-theme .hero-name-swing{ filter: drop-shadow(0 6px 10px rgba(0,0,0,.5))
     sh.onclick=()=>{chapters=chapters.map(c=>({...c,photos:shuf(c.photos)}));render()}; bar.appendChild(sh);
     chapters.forEach((c,i)=>{const b=document.createElement('button'); b.type='button'; b.className='sb-chip'; b.textContent=c.title;
       b.onclick=()=>{const t=document.getElementById('sb-ch-'+i); if(t) window.scrollTo({top:t.getBoundingClientRect().top+pageYOffset-80,behavior:'smooth'})}; bar.appendChild(b)});
-    const ct=document.createElement('div'); ct.className='sb-count'; ct.textContent=total+' memories pinned 📌'; bar.appendChild(ct); root.appendChild(bar);
+    
 
     obs=new IntersectionObserver(es=>{let n=0;es.forEach(e=>{if(!e.isIntersecting)return;obs.unobserve(e.target);e.target.style.setProperty('--d',(n*.14).toFixed(2)+'s');e.target.classList.add('in');n++})},{threshold:.15,rootMargin:'0px 0px -40px 0px'});
 
