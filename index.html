@@ -2387,13 +2387,13 @@ body.dark-theme .hero-age-badge {
   </script>
 
 <!-- ================================================================
-     THREAD OF YOU (v6, LAPTOP, fits one screen) — REPLACE the previous thread block.
+     THREAD OF YOU (v7, LAPTOP, fits one screen) — REPLACE the previous thread block.
      Place it right after the payphone <script> and before <section id="mbbs">.
      Nav link:  <li><a href="#threadboard">Thread</a></li>
 ================================================================ -->
 <style>
   #threadboard{position:relative;overflow:hidden;padding:34px 40px 22px;
-    --p:clamp(70px,calc((100vh - 440px) / 3),140px); /* photo size: shrinks on short screens so the whole board fits */
+    --p:clamp(70px,calc((100vh - 412px) / 3),140px); /* photo size: shrinks on short screens so the whole board fits */
     background:linear-gradient(135deg,#FDF6EE 0%,#F5E6D3 100%)}
   body.dark-theme #threadboard{background:linear-gradient(160deg,#1B140E 0%,#241A11 55%,#2A1D13 100%)}
   #threadboard .section-title{font-size:1.9rem;margin-bottom:2px}
@@ -2453,26 +2453,18 @@ body.dark-theme .hero-age-badge {
   #threadboard .tb-ph{aspect-ratio:1;overflow:hidden;background:linear-gradient(135deg,#F2DEC4,#D4A574)}
   #threadboard .tb-ph img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
 
-  /* centre gift wrap (CSS) */
+  /* centre big image (v3 style): gift card */
   #threadboard .tb-big{width:calc(var(--p) * 1.9 + 16px);touch-action:auto;cursor:pointer}
-  #threadboard .tb-gift{position:relative;aspect-ratio:1;overflow:hidden;
-    background:radial-gradient(circle,rgba(255,255,255,.55) 0 2px,transparent 3px) 0 0/20px 20px,linear-gradient(135deg,#E98FA1,#C2405A 60%,#9A2A44);
-    filter:saturate(.55) brightness(.92);transition:filter .6s}
-  #threadboard .tb-rv,#threadboard .tb-rh{position:absolute;box-shadow:0 0 8px rgba(0,0,0,.3)}
-  #threadboard .tb-rv{left:50%;top:0;bottom:0;width:15%;transform:translateX(-50%);background:linear-gradient(90deg,#B07A1E,#F6D98A 35%,#FFF1C2 50%,#E0A93F 70%,#9A6A18)}
-  #threadboard .tb-rh{top:50%;left:0;right:0;height:15%;transform:translateY(-50%);background:linear-gradient(180deg,#B07A1E,#F6D98A 35%,#FFF1C2 50%,#E0A93F 70%,#9A6A18)}
-  #threadboard .tb-loop{position:absolute;top:27%;width:27%;height:22%;border-radius:60% 60% 50% 50%;
-    background:radial-gradient(ellipse at 50% 70%,#9A6A18 0 28%,#F6D98A 30%,#E0A93F 70%,#B07A1E);box-shadow:0 3px 6px rgba(0,0,0,.35)}
-  #threadboard .tb-loop.l{left:23%;transform:rotate(-26deg);transform-origin:100% 100%}
-  #threadboard .tb-loop.r{left:50%;transform:rotate(26deg);transform-origin:0 100%}
-  #threadboard .tb-tail{position:absolute;top:52%;width:8%;height:24%;background:linear-gradient(180deg,#F6D98A,#C98F2A);clip-path:polygon(0 0,100% 0,100% 100%,50% 86%,0 100%)}
-  #threadboard .tb-tail.l{left:38%;transform:rotate(14deg)}
-  #threadboard .tb-tail.r{left:54%;transform:rotate(-14deg)}
-  #threadboard .tb-knot2{position:absolute;left:50%;top:50%;width:13%;height:13%;margin:-6.5% 0 0 -6.5%;border-radius:50%;
-    background:radial-gradient(circle at 35% 30%,#FFF1C2,#E0A93F 60%,#9A6A18);box-shadow:0 3px 6px rgba(0,0,0,.4)}
-  #threadboard .tb-big.ready .tb-gift{filter:none}
-  #threadboard .tb-big.ready .tb-pol{animation:tb-wiggle 1.8s ease-in-out infinite;box-shadow:0 0 44px 10px rgba(255,190,90,.85),0 12px 28px rgba(60,30,10,.4)}
-  @keyframes tb-wiggle{0%,100%{transform:rotate(0)}20%{transform:rotate(-3deg)}40%{transform:rotate(3deg)}60%{transform:rotate(-1.5deg)}80%{transform:rotate(1.5deg)}}
+  #threadboard .tb-big .tb-pol{padding:16px 10px 6px}
+  #threadboard .tb-gift{position:relative;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+    font-size:calc(var(--p) * .8);line-height:1;background:radial-gradient(circle,#FFE9C9,#E8A855 85%);filter:grayscale(.6) brightness(.92);transition:filter .6s}
+  #threadboard .tb-gift small{font-family:'Caveat',cursive;font-size:calc(var(--p) * .2 + 6px);font-weight:700;color:#6B3A2A}
+  #threadboard .tb-lock{position:absolute;top:6px;right:8px;font-size:1.1rem;line-height:1}
+  #threadboard .tb-lab{font-family:'Caveat',cursive;font-weight:700;font-size:1.15rem;color:#4A2E17;text-align:center;padding:6px 2px 8px}
+  #threadboard .tb-big.ready .tb-lock{display:none}
+  #threadboard .tb-big.ready .tb-gift{filter:none;animation:tb-wiggle 1.6s ease-in-out infinite}
+  #threadboard .tb-big.ready .tb-pol{box-shadow:0 0 44px 10px rgba(255,190,90,.85),0 12px 28px rgba(60,30,10,.4)}
+  @keyframes tb-wiggle{0%,100%{transform:rotate(0) scale(1)}20%{transform:rotate(-6deg) scale(1.05)}40%{transform:rotate(6deg) scale(1.05)}60%{transform:rotate(-3deg)}80%{transform:rotate(3deg)}}
   #threadboard .tb-big.nudge .tb-pol{animation:tb-nudge .5s}
   @keyframes tb-nudge{0%,100%{transform:translateX(0)}25%{transform:translateX(-9px)}75%{transform:translateX(9px)}}
 
@@ -2500,7 +2492,6 @@ body.dark-theme .hero-age-badge {
 <section id="threadboard">
   <div class="tb-hearts" id="tbHearts"></div>
   <h2 class="section-title reveal">Thread of You 🧵💕</h2>
-  <p class="section-sub reveal">Click a photo to hear its song · hold &amp; drag to slide it along the thread</p>
   <div class="tb-count" id="tbCount">0/6 discovered</div>
 
   <div class="tb-board" id="tbBoard">
@@ -2509,11 +2500,7 @@ body.dark-theme .hero-age-badge {
     <div class="tb-col" id="tbL"></div>
     <div class="tb-col" id="tbC">
       <div class="tb-card tb-big" id="tbBig">
-        <div class="tb-pol"><div class="tb-gift">
-          <span class="tb-rv"></span><span class="tb-rh"></span>
-          <span class="tb-tail l"></span><span class="tb-tail r"></span>
-          <span class="tb-loop l"></span><span class="tb-loop r"></span><span class="tb-knot2"></span>
-        </div></div>
+        <div class="tb-pol"><div class="tb-gift"><span class="tb-lock">🔒</span>🎁<small>Open me 💖</small></div><div class="tb-lab">A surprise for you</div></div>
       </div>
     </div>
     <div class="tb-col" id="tbR"></div>
@@ -2658,7 +2645,7 @@ body.dark-theme .hero-age-badge {
   }
 })();
 </script>
-<!-- ============ END THREAD OF YOU (v6) ============ -->
+<!-- ============ END THREAD OF YOU (v7) ============ -->
   
   <section id="mbbs">
     <span class="mbbs-stethoscope" style="top:8%;left:5%">🩺</span>
