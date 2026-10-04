@@ -1144,6 +1144,7 @@ body.dark-theme .hero-age-badge {
       <li><a href="#puzzle">Puzzle</a></li>
       <li><a href="#cake">Cake</a></li>
       <li><a href="#payphone">Call</a></li>
+      <li><a href="#threadboard">Thread</a></li>
       <li><a href="#mbbs">Future Dr.</a></li>
       <li><a href="#extras">Surprises</a></li>
       <li><a href="#owl-letters">Open Letters</a></li>
@@ -2385,6 +2386,270 @@ body.dark-theme .hero-age-badge {
   })();
   </script>
 
+ <!-- ================================================================
+     THREAD OF YOU (v3) — REPLACE the previous thread block with this one.
+     Place it right after the payphone <script> and before <section id="mbbs">.
+     Nav link:  <li><a href="#threadboard">Thread</a></li>
+================================================================ -->
+<style>
+  #threadboard{position:relative;overflow:hidden;background:linear-gradient(135deg,#FDF6EE 0%,#F5E6D3 100%)}
+  body.dark-theme #threadboard{background:linear-gradient(160deg,#1B140E 0%,#241A11 55%,#2A1D13 100%)}
+  #threadboard .tb-count{text-align:center;font-family:'Caveat',cursive;font-size:1.6rem;font-weight:700;color:#C47A3A;margin:-30px 0 40px}
+  body.dark-theme #threadboard .tb-count{color:#F0C98A}
+  #threadboard .tb-hearts{position:absolute;inset:0;pointer-events:none;z-index:0}
+  #threadboard .tb-hearts span{position:absolute;bottom:-30px;opacity:0;animation:tb-rise linear infinite}
+  @keyframes tb-rise{0%{transform:translateY(0) scale(.7);opacity:0}15%{opacity:.6}100%{transform:translateY(-110vh) scale(1.2) rotate(25deg);opacity:0}}
+
+  /* cork board (same as "Our Moments") */
+  #threadboard .tb-board{position:relative;z-index:2;max-width:780px;margin:0 auto;border-radius:18px;padding:58px 26px 56px;
+    display:flex;flex-direction:column;align-items:center;gap:70px;
+    background-color:#D8B88C;background-image:radial-gradient(circle at 20% 30%,rgba(120,70,30,.3) 0 1.5px,transparent 2px),radial-gradient(circle at 70% 60%,rgba(255,238,205,.38) 0 1.5px,transparent 2px),radial-gradient(circle at 45% 82%,rgba(90,50,20,.24) 0 2px,transparent 2.6px);
+    background-size:37px 41px,53px 47px,61px 59px;
+    box-shadow:inset 0 0 70px rgba(90,50,20,.38),0 0 0 10px #9A6A3C,0 0 0 12px #6B3A2A,0 26px 54px rgba(107,58,42,.38)}
+  body.dark-theme #threadboard .tb-board{background-color:#2B1E14;
+    background-image:radial-gradient(circle at 20% 30%,rgba(0,0,0,.45) 0 1.5px,transparent 2px),radial-gradient(circle at 70% 60%,rgba(240,201,138,.1) 0 1.5px,transparent 2px);
+    box-shadow:inset 0 0 80px rgba(0,0,0,.65),0 0 0 10px #4A3220,0 0 0 12px #1F140B,0 26px 54px rgba(0,0,0,.65)}
+  @media (max-width:560px){#threadboard .tb-board{padding:52px 18px 48px;gap:62px}}
+
+  #threadboard .tb-side{display:flex;gap:12px;justify-content:center;width:100%}
+  #threadboard .tb-center{display:flex;justify-content:center;width:100%}
+
+  /* thread + nails (above the cards, below the pins) */
+  #threadboard svg.tb-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:3}
+  #threadboard .tb-th-base{fill:none;stroke:#7A2E22;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 2px 2px rgba(50,25,10,.45))}
+  #threadboard .tb-th-hi{fill:none;stroke:#E3A079;stroke-width:1;stroke-dasharray:2 4;stroke-linecap:round;opacity:.9}
+  #threadboard .tb-nail{fill:#C9922E;stroke:#5A3220;stroke-width:1.5}
+  #threadboard .tb-nail-hi{fill:#FFF1C2}
+  body.dark-theme #threadboard .tb-th-base{stroke:#E8C48A;filter:drop-shadow(0 0 5px rgba(240,201,138,.75))}
+  body.dark-theme #threadboard .tb-th-hi{stroke:#FFF6DF}
+  body.dark-theme #threadboard .tb-nail{fill:#F0C98A;stroke:#1F140B}
+
+  /* push pins */
+  #threadboard .tb-pinhead{position:absolute;left:0;top:0;width:20px;height:20px;z-index:4;pointer-events:none;will-change:transform;
+    --pc1:#FF9A9A;--pc2:#D6354B;--pc3:#7D1224;--pg:rgba(255,90,100,.85)}
+  #threadboard .tb-pinhead.gold{--pc1:#FFF0B8;--pc2:#E1A02F;--pc3:#8A5A14;--pg:rgba(255,200,90,.9)}
+  #threadboard .tb-pinhead.rose{--pc1:#FFC8DA;--pc2:#E8648F;--pc3:#8C2A50;--pg:rgba(255,130,175,.85)}
+  #threadboard .tb-pinhead i{position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(0,0,0,.3);
+    background:radial-gradient(circle at 34% 28%,#fff 0 7%,var(--pc1) 9%,var(--pc2) 55%,var(--pc3) 100%);
+    box-shadow:0 6px 7px rgba(0,0,0,.5),0 0 14px var(--pg),inset 0 -3px 4px rgba(0,0,0,.28)}
+  #threadboard .tb-pinhead i::after{content:"";position:absolute;left:50%;top:50%;width:7px;height:7px;border-radius:50%;transform:translate(-50%,-50%);
+    background:radial-gradient(circle at 40% 35%,var(--pc1),var(--pc3));box-shadow:inset 0 1px 2px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.25)}
+  #threadboard .tb-pinhead::after{content:"";position:absolute;left:50%;top:15px;width:2px;height:9px;margin-left:-1px;border-radius:1px;
+    background:linear-gradient(#e8e8e8,#777);transform:rotate(10deg);z-index:-1;box-shadow:2px 3px 3px rgba(0,0,0,.4)}
+
+  #threadboard .tb-card{position:relative;z-index:2;flex:1 1 0;min-width:0;max-width:150px;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab}
+  #threadboard .tb-card:active{cursor:grabbing}
+  #threadboard .tb-pol{position:relative;background:#FFFDF8;padding:14px 8px 0;border-radius:3px;transform-origin:50% 0;
+    box-shadow:0 12px 22px rgba(60,30,10,.36),0 2px 4px rgba(60,30,10,.28),0 0 22px rgba(232,168,85,.45);animation:tb-sway 4.5s ease-in-out infinite;transition:box-shadow .3s}
+  body.dark-theme #threadboard .tb-pol{background:#F2E5CF;box-shadow:0 12px 22px rgba(0,0,0,.6),0 0 24px rgba(240,201,138,.4)}
+  #threadboard .tb-card:nth-child(2n) .tb-pol{animation-delay:-1.4s;animation-duration:5.2s}
+  #threadboard .tb-card:nth-child(3n) .tb-pol{animation-delay:-2.6s}
+  @keyframes tb-sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+  #threadboard .tb-card:hover .tb-pol{box-shadow:0 18px 30px rgba(60,30,10,.45),0 0 34px rgba(232,168,85,.8)}
+  #threadboard .tb-ph{aspect-ratio:1;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:2.4rem;background:linear-gradient(135deg,#F2DEC4,#D4A574)}
+  #threadboard .tb-ph img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+  #threadboard .tb-lab{font-family:'Caveat',cursive;font-weight:700;font-size:1.15rem;color:#4A2E17;text-align:center;padding:7px 2px 9px}
+  #threadboard .tb-seen{position:absolute;right:-8px;bottom:-8px;font-size:1.15rem;z-index:6;opacity:0;transform:scale(0);transition:.4s cubic-bezier(.34,1.56,.64,1)}
+  #threadboard .tb-card.seen .tb-seen{opacity:1;transform:scale(1)}
+
+  /* centre gift */
+  #threadboard .tb-big{flex:none;width:clamp(170px,52vw,240px);max-width:none;touch-action:auto;cursor:pointer}
+  #threadboard .tb-gift{position:relative;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:5rem;
+    background:radial-gradient(circle,#FFE9C9,#E8A855 85%);filter:grayscale(.6) brightness(.92);transition:filter .6s}
+  #threadboard .tb-gift small{font-family:'Caveat',cursive;font-size:1.35rem;font-weight:700;color:#6B3A2A}
+  #threadboard .tb-lock{position:absolute;top:8px;right:8px;font-size:1.3rem}
+  #threadboard .tb-big.ready .tb-lock{display:none}
+  #threadboard .tb-big.ready .tb-gift{filter:none;animation:tb-wiggle 1.6s ease-in-out infinite}
+  #threadboard .tb-big.ready .tb-pol{box-shadow:0 0 44px 10px rgba(255,190,90,.85),0 12px 28px rgba(60,30,10,.4)}
+  @keyframes tb-wiggle{0%,100%{transform:rotate(0) scale(1)}20%{transform:rotate(-6deg) scale(1.05)}40%{transform:rotate(6deg) scale(1.05)}60%{transform:rotate(-3deg)}80%{transform:rotate(3deg)}}
+  #threadboard .tb-big.nudge .tb-pol{animation:tb-nudge .5s}
+  @keyframes tb-nudge{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+
+  /* viewer */
+  #tbModal{position:fixed;inset:0;z-index:100000;display:none;align-items:center;justify-content:center;padding:14px;background:rgba(48,26,10,.88);backdrop-filter:blur(6px)}
+  #tbModal.on{display:flex}
+  #tbModal .tb-view{position:relative;width:min(88vw,380px);background:#FFFDF8;padding:14px 14px 20px;border-radius:4px;text-align:center;box-shadow:0 0 60px rgba(232,168,85,.6),0 30px 70px rgba(0,0,0,.55)}
+  body.dark-theme #tbModal .tb-view{background:#F2E5CF}
+  #tbModal .tb-vph{aspect-ratio:1;overflow:hidden;background:linear-gradient(135deg,#F2DEC4,#D4A574);display:flex;align-items:center;justify-content:center;font-size:6rem}
+  #tbModal .tb-vph.tall{aspect-ratio:3/4}
+  #tbModal .tb-vph img{width:100%;height:100%;object-fit:cover}
+  #tbModal .tb-cap{font-family:'Pacifico',cursive;font-size:1.3rem;color:#8B4513;margin-top:12px}
+  #tbModal .tb-line{font-family:'Caveat',cursive;font-size:1.3rem;font-weight:700;color:#4A2E17;padding:4px 8px 0;line-height:1.3}
+  #tbModal .tb-eq{display:flex;gap:4px;justify-content:center;align-items:flex-end;height:22px;margin-top:10px}
+  #tbModal .tb-eq i{width:5px;border-radius:3px;background:#C47A3A;animation:tb-bar .8s ease-in-out infinite}
+  #tbModal .tb-eq i:nth-child(2){animation-delay:-.2s}#tbModal .tb-eq i:nth-child(3){animation-delay:-.45s}
+  #tbModal .tb-eq i:nth-child(4){animation-delay:-.1s}#tbModal .tb-eq i:nth-child(5){animation-delay:-.6s}
+  @keyframes tb-bar{0%,100%{height:5px}50%{height:22px}}
+  #tbModal .tb-x{position:absolute;top:-14px;right:-10px;width:40px;height:40px;border-radius:50%;border:2px solid rgba(255,255,255,.6);background:linear-gradient(135deg,#D4956A,#8B4513);color:#fff;font-size:1.1rem;cursor:pointer;box-shadow:0 0 16px rgba(232,168,85,.8)}
+  .tb-conf{position:fixed;z-index:100001;pointer-events:none;font-size:1.3rem}
+  @media (prefers-reduced-motion:reduce){#threadboard *{animation:none!important}}
+</style>
+
+<section id="threadboard">
+  <div class="tb-hearts" id="tbHearts"></div>
+  <h2 class="section-title reveal">Thread of You 🧵💕</h2>
+  <p class="section-sub reveal">Tap a photo to hear its song · hold &amp; drag to play with the thread ✨</p>
+  <div class="tb-count" id="tbCount">0/6 discovered 🎁</div>
+
+  <div class="tb-board" id="tbBoard">
+    <svg class="tb-svg" id="tbSvg"></svg>
+    <div class="tb-pins" id="tbPins"></div>
+    <div class="tb-side" id="tbTop"></div>
+    <div class="tb-center" id="tbMid">
+      <div class="tb-card tb-big" id="tbBig">
+        <div class="tb-pol"><div class="tb-gift"><span class="tb-lock">🔒</span>🎁<small>Open me 💖</small></div><div class="tb-lab">A surprise for you</div></div>
+      </div>
+    </div>
+    <div class="tb-side" id="tbBottom"></div>
+  </div>
+</section>
+
+<div id="tbModal"><div class="tb-view" id="tbView">
+  <button class="tb-x" id="tbX" aria-label="Close">✕</button>
+  <div class="tb-vph" id="tbVph"></div>
+  <div class="tb-cap" id="tbCap"></div>
+  <div class="tb-line" id="tbLine"></div>
+  <div class="tb-eq"><i></i><i></i><i></i><i></i><i></i></div>
+</div></div>
+
+<script>
+(function(){
+  /* ===== EDIT HERE: photos, captions, songs ===== */
+  var ITEMS=[
+    {n:'Eyes',  e:'👀',img:'images/img1.jpg',song:'music/a.mp3',line:'Aankhon mein teri, ab meri duniya hai.'},
+    {n:'Hair',  e:'💫',img:'images/img2.jpg',song:'music/b.mp3',line:'Zulfon mein jaise sab kuch kho gaya.'},
+    {n:'Smile', e:'😊',img:'images/img3.jpg',song:'music/c.mp3',line:'Tumhari muskurahat meri sabse badi wajah hai.'},
+    {n:'Hands', e:'🤝',img:'images/img4.jpg',song:'music/d.mp3',line:'Bas yeh haath kabhi na chhute.'},
+    {n:'Jhumka',e:'✨',img:'images/img5.jpg',song:'music/e.mp3',line:'Jab jhumka hila, dil bhi hil gaya.'},
+    {n:'Lips',  e:'💋',img:'images/img6.jpg',song:'music/f.mp3',line:'Kuch baatein bina kahe hi sab keh jaati hain.'}
+  ];
+  var FINAL={n:'My Whole World',e:'💖',img:'images/full.jpg',song:'music/g.mp3',line:'Happy Birthday, Munni. Tum hi meri sabse khoobsurat kahani ho. 🎂'};
+  /* ============================================== */
+
+  var $=function(id){return document.getElementById(id)};
+  var board=$('tbBoard'),svg=$('tbSvg'),pinLayer=$('tbPins'),big=$('tbBig'),modal=$('tbModal'),view=$('tbView');
+  var seen={},seenN=0,cards=[],audios={},current=null,vis=false;
+  pinLayer.style.cssText='position:absolute;inset:0;pointer-events:none;z-index:4';
+
+  var hs=$('tbHearts'),em=['💖','🤎','💛','🌸','💕','✨'];
+  for(var h=0;h<12;h++){var s=document.createElement('span');s.textContent=em[h%em.length];
+    s.style.left=(Math.random()*96)+'%';s.style.fontSize=(14+Math.random()*16)+'px';
+    s.style.animationDuration=(9+Math.random()*9)+'s';s.style.animationDelay=(-Math.random()*14)+'s';hs.appendChild(s)}
+
+  ITEMS.forEach(function(it,i){
+    var c=document.createElement('div');c.className='tb-card';
+    c.innerHTML='<span class="tb-seen">💖</span><div class="tb-pol"><div class="tb-ph"></div><div class="tb-lab">'+it.n+' '+it.e+'</div></div>';
+    var ph=c.querySelector('.tb-ph');ph.textContent=it.e;
+    var im=new Image();im.alt=it.n;im.onload=function(){ph.textContent='';ph.appendChild(im)};im.src=it.img;
+    (i<3?$('tbTop'):$('tbBottom')).appendChild(c);
+    cards.push(c);bindDrag(c,function(){openItem(i)});
+  });
+
+  function bindDrag(el,onTap){
+    var sy=0,moved=false,down=false;
+    el.addEventListener('pointerdown',function(e){down=true;moved=false;sy=e.clientY;el.setPointerCapture(e.pointerId);gsap.killTweensOf(el)});
+    el.addEventListener('pointermove',function(e){if(!down)return;var dy=Math.max(-55,Math.min(55,e.clientY-sy));if(Math.abs(dy)>6)moved=true;gsap.set(el,{y:dy});draw()});
+    el.addEventListener('pointerup',function(){if(!down)return;down=false;gsap.to(el,{y:0,duration:1.1,ease:'elastic.out(1,.3)'});if(!moved)onTap()});
+    el.addEventListener('pointercancel',function(){down=false;gsap.to(el,{y:0,duration:.6})});
+  }
+  big.addEventListener('click',function(){
+    if(seenN<ITEMS.length){big.classList.add('nudge');setTimeout(function(){big.classList.remove('nudge')},500);
+      $('tbCount').textContent='Open all 6 first to unlock the gift 🔒 ('+seenN+'/6)';return}
+    reveal();
+  });
+
+  /* ---- thread: three clotheslines hung between nails, joined by two side threads ---- */
+  var NS='http://www.w3.org/2000/svg';
+  function mkPath(){var a=document.createElementNS(NS,'path'),b=document.createElementNS(NS,'path');
+    a.setAttribute('class','tb-th-base');b.setAttribute('class','tb-th-hi');svg.appendChild(a);svg.appendChild(b);return [a,b]}
+  var rows=[{el:$('tbTop'),ids:[0,1,2]},{el:$('tbMid'),ids:['B']},{el:$('tbBottom'),ids:[3,4,5]}];
+  var rowPaths=rows.map(mkPath),sideL=mkPath(),sideR=mkPath(),nails=[];
+  function mkNail(){var g=document.createElementNS(NS,'g'),c=document.createElementNS(NS,'circle'),d=document.createElementNS(NS,'circle');
+    c.setAttribute('class','tb-nail');c.setAttribute('r','5.5');d.setAttribute('class','tb-nail-hi');d.setAttribute('r','1.8');
+    g.appendChild(c);g.appendChild(d);svg.appendChild(g);return g}
+  for(var n=0;n<6;n++)nails.push(mkNail());
+  var colors=['','gold','rose'],pinEls={};
+  function mkPin(key,idx){var p=document.createElement('div');p.className='tb-pinhead '+colors[idx%3];p.innerHTML='<i></i>';pinLayer.appendChild(p);pinEls[key]=p}
+  [0,1,2,3,4,5,'B'].forEach(function(k,i){mkPin(k,i)});
+  function elOf(k){return k==='B'?big:cards[k]}
+  function setD(p,d){p[0].setAttribute('d',d);p[1].setAttribute('d',d)}
+
+  function draw(){
+    if(!vis)return;
+    var b=board.getBoundingClientRect(),W=b.width,xs=[13,W-13],ys=[];
+    rows.forEach(function(row,ri){
+      var y0=row.el.getBoundingClientRect().top-b.top+7;ys.push(y0);
+      var pts=[{x:xs[0],y:y0}];
+      row.ids.forEach(function(k){
+        var r=elOf(k).getBoundingClientRect(),a={x:r.left+r.width/2-b.left,y:r.top-b.top+7};
+        pts.push(a);pinEls[k].style.transform='translate('+(a.x-10)+'px,'+(a.y-10)+'px)';
+      });
+      pts.push({x:xs[1],y:y0});
+      var d='M'+pts[0].x+','+pts[0].y;
+      for(var i=1;i<pts.length;i++){var p=pts[i-1],q=pts[i],dist=Math.hypot(q.x-p.x,q.y-p.y),sag=Math.min(13,dist*.08);
+        d+=' Q'+((p.x+q.x)/2)+','+((p.y+q.y)/2+sag)+' '+q.x+','+q.y}
+      setD(rowPaths[ri],d);
+      nails[ri*2].setAttribute('transform','translate('+xs[0]+','+y0+')');
+      nails[ri*2+1].setAttribute('transform','translate('+xs[1]+','+y0+')');
+    });
+    setD(sideL,'M'+xs[0]+','+ys[0]+' L'+xs[0]+','+ys[1]+' L'+xs[0]+','+ys[2]);
+    setD(sideR,'M'+xs[1]+','+ys[0]+' L'+xs[1]+','+ys[1]+' L'+xs[1]+','+ys[2]);
+  }
+  new IntersectionObserver(function(es){vis=es[0].isIntersecting;if(vis)draw()}).observe(board);
+  gsap.ticker.add(draw);window.addEventListener('resize',draw);
+
+  /* ---- music: one song at a time; pauses the site's other audio ---- */
+  function pauseSiteAudio(){
+    ['audioPlayer','phwAudio','entrySong','letterAudio'].forEach(function(id){var a=$(id);if(a&&!a.paused)a.pause()});
+    if(window.khatAudio)try{window.khatAudio.pause()}catch(e){}
+  }
+  function getAudio(f){if(!audios[f]){var a=new Audio(f);a.preload='auto';a.loop=true;audios[f]=a}return audios[f]}
+  function stopMusic(){if(!current)return;var a=current;current=null;gsap.to(a,{volume:0,duration:.25,onComplete:function(){a.pause()}})}
+  function playMusic(f){
+    pauseSiteAudio();
+    var a=getAudio(f);
+    Object.keys(audios).forEach(function(k){if(audios[k]!==a){gsap.killTweensOf(audios[k]);audios[k].pause()}});
+    gsap.killTweensOf(a);a.currentTime=0;a.volume=0;
+    var pr=a.play();if(pr&&pr.catch)pr.catch(function(){});
+    gsap.to(a,{volume:1,duration:.6});current=a;
+  }
+
+  function show(it,tall){
+    var v=$('tbVph');v.className='tb-vph'+(tall?' tall':'');v.textContent=it.e;
+    var im=new Image();im.alt=it.n;im.onload=function(){v.textContent='';v.appendChild(im)};im.src=it.img;
+    $('tbCap').textContent=it.n+' '+it.e;$('tbLine').textContent=it.line;
+    modal.classList.add('on');playMusic(it.song);
+  }
+  function openItem(i){
+    show(ITEMS[i],false);
+    gsap.fromTo(view,{scale:.4,rotation:-8,opacity:0},{scale:1,rotation:0,opacity:1,duration:.55,ease:'back.out(1.7)'});
+    if(!seen[i]){seen[i]=1;seenN++;cards[i].classList.add('seen');
+      if(seenN===ITEMS.length){$('tbCount').textContent='All 6 found! Tap the gift 🎁💖';big.classList.add('ready')}
+      else $('tbCount').textContent=seenN+'/6 discovered 🎁'}
+  }
+  function reveal(){
+    show(FINAL,true);
+    gsap.fromTo(view,{rotationY:180,scale:.5,opacity:0},{rotationY:0,scale:1,opacity:1,duration:1,ease:'back.out(1.4)'});
+    confetti();
+  }
+  function close(){modal.classList.remove('on');stopMusic()}
+  $('tbX').onclick=close;
+  modal.addEventListener('click',function(e){if(e.target===modal)close()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('on'))close()});
+
+  function confetti(){
+    var set=['💖','🎉','✨','🤎','🎀','🌸'];
+    for(var i=0;i<42;i++){(function(){
+      var s=document.createElement('span');s.className='tb-conf';s.textContent=set[Math.floor(Math.random()*set.length)];
+      s.style.left=(50+(Math.random()-.5)*20)+'vw';s.style.top='55vh';document.body.appendChild(s);
+      gsap.to(s,{x:(Math.random()-.5)*window.innerWidth*.9,y:-(Math.random()*window.innerHeight*.6)+120,rotation:Math.random()*540,duration:1.6+Math.random(),ease:'power2.out'});
+      gsap.to(s,{opacity:0,delay:1.4,duration:1,onComplete:function(){s.remove()}});
+    })()}
+  }
+})();
+</script>
+<!-- ============ END THREAD OF YOU (v3) ============ -->
+  
   <section id="mbbs">
     <span class="mbbs-stethoscope" style="top:8%;left:5%">🩺</span>
     <span class="mbbs-stethoscope" style="top:20%;right:8%;animation-delay:-2s">💊</span>
