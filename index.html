@@ -5424,24 +5424,7 @@ body.dark-theme .hero-name-swing{ filter: drop-shadow(0 6px 10px rgba(0,0,0,.5))
   new MutationObserver(decorate).observe(root,{childList:true});
   decorate();
 
-  // a lightning strike on a random board that is on screen, every 3.5 to 7 seconds
-  function strike(){
-    const visible=[...root.querySelectorAll('.sb-board')].filter(b=>{
-      const r=b.getBoundingClientRect(); return r.bottom>0 && r.top<innerHeight;
-    });
-    if(visible.length){
-      const b=visible[Math.floor(Math.random()*visible.length)];
-      const bolt=document.createElementNS('http://www.w3.org/2000/svg','svg');
-      bolt.setAttribute('class','sb-bolt'); bolt.setAttribute('viewBox','0 0 60 200'); bolt.setAttribute('preserveAspectRatio','none');
-      bolt.innerHTML='<polygon points="34,0 14,70 30,72 6,140 26,142 12,200 52,100 34,98 54,50 38,48 50,0" fill="#fff8d6"/>';
-      bolt.style.left=R(8,88)+'%';
-      b.appendChild(bolt);
-      b.classList.add('sb-flash');
-      setTimeout(()=>{bolt.remove(); b.classList.remove('sb-flash');},750);
-    }
-    setTimeout(strike,R(3500,7000));
-  }
-  setTimeout(strike,2500);
+
 })();
 </script>
 </body>
